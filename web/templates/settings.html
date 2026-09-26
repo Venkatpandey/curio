@@ -1,0 +1,18 @@
+{{define "settings"}}
+<section class="page-heading"><a class="back-link" href="/">← Back to discovering</a><p class="eyebrow">Make yourself at home</p><h1>Your <em>corner.</em></h1><p>A few small things to make Curio feel like you.</p></section>
+{{if .Notice}}<div class="notice success" role="status">{{.Notice}}</div>{{end}}
+{{if .Error}}<div class="notice error" role="alert">{{.Error}}</div>{{end}}
+<div class="settings-layout"><form class="settings-form" action="/settings" method="post">
+<input type="hidden" name="csrf" value="{{.CSRF}}">
+<section class="settings-section"><div class="settings-title"><span class="setting-number">01</span><div><h2>The basics</h2><p>Your username is <strong>{{.User.Username}}</strong>. Use it when you come back.</p></div></div>
+<label for="display-name">Display name</label><input id="display-name" name="display_name" value="{{.Settings.DisplayName}}" required maxlength="40" autocomplete="nickname">
+<fieldset class="theme-fieldset"><legend>Set the mood</legend><div class="theme-options">
+<label><input type="radio" name="theme" value="system" {{if eq .Settings.Theme "system"}}checked{{end}}> <span>◐ &nbsp; System</span></label>
+<label><input type="radio" name="theme" value="light" {{if eq .Settings.Theme "light"}}checked{{end}}> <span>☼ &nbsp; Light</span></label>
+<label><input type="radio" name="theme" value="dark" {{if eq .Settings.Theme "dark"}}checked{{end}}> <span>☾ &nbsp; Dark</span></label></div></fieldset></section>
+<section class="settings-section"><div class="settings-title"><span class="setting-number">02</span><div><h2>Things you wonder about</h2><p>Choose interests to see those topics more often. Your reactions also shape your mix, with room for unexpected picks.</p></div></div><fieldset class="interests"><legend class="sr-only">Your interests</legend>{{range .Categories}}<label><input type="checkbox" name="interest" value="{{.}}" {{if contains $.Settings.Interests .}}checked{{end}}><span>{{.}}</span></label>{{end}}</fieldset></section>
+<section class="settings-section"><div class="settings-title"><span class="setting-number">03</span><div><h2>Your starting point</h2><p>Optional. See how far away each place is from home. Coordinates stay on your server.</p></div></div><label for="home-label">Home label</label><input id="home-label" name="home_label" value="{{.Settings.HomeLabel}}" placeholder="Somewhere you call home" maxlength="100">
+<div class="coordinate-fields"><div><label for="latitude">Latitude</label><input type="number" id="latitude" name="latitude" value="{{coordinate .Settings.Latitude}}" min="-90" max="90" step="any" placeholder="e.g. 52.52"></div><div><label for="longitude">Longitude</label><input type="number" id="longitude" name="longitude" value="{{coordinate .Settings.Longitude}}" min="-180" max="180" step="any" placeholder="e.g. 13.405"></div></div><p class="field-hint">Enter both coordinates, or leave both empty.</p></section>
+<button class="button primary" type="submit">Save my changes <span aria-hidden="true">↗</span></button>
+</form><aside class="profile-aside"><svg class="aside-spark" aria-hidden="true"><use href="/static/icons.svg#spark"/></svg><h2>A little space <br>of your own.</h2><p>Your settings live on this Curio server. No email address needed.</p><p><a href="/collection?tab=mix">See and reset your discovery mix ↗</a></p><div class="aside-divider"></div><p class="field-hint">Anyone with the household password can open your username.</p><form action="/logout" method="post"><input type="hidden" name="csrf" value="{{.CSRF}}"><button class="button secondary full" type="submit">Leave this profile</button></form></aside></div>
+{{end}}

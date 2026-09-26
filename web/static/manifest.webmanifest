@@ -1,0 +1,15 @@
+{
+  "id": "/",
+  "name": "Curio — a little more curious",
+  "short_name": "Curio",
+  "description": "A place you never knew. A fact you didn't expect.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#151e1b",
+  "theme_color": "#151e1b",
+  "icons": [
+    {"src": "/static/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "/static/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}

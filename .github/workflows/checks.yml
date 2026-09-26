@@ -1,0 +1,95 @@
+name: Checks
+on:
+  workflow_call:
+permissions:
+  contents: read
+jobs:
+  go:
+    name: Go checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+      - name: Formatting
+        run: test -z "$(gofmt -l cmd internal web)"
+      - run: go mod verify
+      - run: go test -race -coverprofile=coverage.out ./...
+      - run: go vet ./...
+      - run: go build -trimpath -o bin/curio ./cmd/curio
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage.out
+          retention-days: 14
+  browser:
+    name: Browser (${{ matrix.browser }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Install browser
+        run: npx playwright install --with-deps "$CURIO_TEST_BROWSER"
+        env:
+          CURIO_TEST_BROWSER: ${{ matrix.browser }}
+      - run: go build -o bin/curio ./cmd/curio
+      - name: Test disposable app
+        shell: bash
+        env:
+          CURIO_ACCESS_PASSWORD: curio-local-qa-password
+          CURIO_DATA_DIR: ${{ runner.temp }}/curio-data
+          CURIO_PORT: '18080'
+          CURIO_WIKIMEDIA_ENABLED: 'false'
+          CURIO_TEST_BROWSER: ${{ matrix.browser }}
+        run: |
+          mkdir -p test-results
+          bin/curio > test-results/server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:18080/health >/dev/null; then break; fi
+            sleep 1
+          done
+          curl --fail --silent http://127.0.0.1:18080/health
+          npm run test:browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-${{ matrix.browser }}
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 7
+  container:
+    name: Linux amd64 + arm64
+    needs: [go, browser]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

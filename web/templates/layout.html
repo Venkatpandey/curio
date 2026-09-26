@@ -1,0 +1,30 @@
+{{define "layout"}}<!doctype html>
+<html lang="en" data-theme="{{.Settings.Theme}}">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#151e1b"><meta name="description" content="A place you never knew. A fact you didn't expect. Take a little curiosity break with Curio.">
+<title>{{.Title}} · Curio</title>
+<link rel="icon" type="image/svg+xml" href="/static/icon.svg"><link rel="apple-touch-icon" href="/static/icon-192.png"><link rel="manifest" href="/static/manifest.webmanifest">
+<link rel="stylesheet" href="/static/app.css"><script src="/static/app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="site-shell">
+<header class="site-header">
+<a class="brand" href="/" aria-label="Curio home"><svg class="brand-mark" aria-hidden="true"><use href="/static/icons.svg#spark"/></svg>curio<span class="brand-dot">.</span></a>
+<nav aria-label="Main navigation">
+<a class="nav-link {{if eq .View "home"}}active{{end}}" href="/">Discover</a>
+{{if .User}}<a class="nav-link collection-link" href="/collection" {{if eq .View "collection"}}aria-current="page"{{end}}>My collection</a><a class="profile-link" href="/settings" {{if eq .View "settings"}}aria-current="page"{{end}}><svg class="icon" aria-hidden="true"><use href="/static/icons.svg#person"/></svg><span>{{.User.Settings.DisplayName}}</span></a>{{else}}<a class="profile-link" href="/enter"><svg class="icon" aria-hidden="true"><use href="/static/icons.svg#person"/></svg><span>Come on in</span></a>{{end}}
+</nav>
+</header>
+<main id="main">
+{{if eq .View "home"}}{{template "home" .}}{{end}}
+{{if eq .View "enter"}}{{template "enter" .}}{{end}}
+{{if eq .View "settings"}}{{template "settings" .}}{{end}}
+{{if eq .View "collection"}}{{template "collection" .}}{{end}}
+{{if eq .View "discover"}}{{template "discover" .}}{{end}}
+{{if eq .View "error"}}<section class="error-page"><span class="eyebrow">A little interruption</span><h1>{{.Title}}</h1><p>{{.Error}}</p><a class="button primary" href="/">Back to discoveries <span aria-hidden="true">↗</span></a></section>{{end}}
+</main>
+<footer class="site-footer"><span><svg class="tiny-icon" aria-hidden="true"><use href="/static/icons.svg#spark"/></svg> Stay a little curious.</span><span>Your own little corner of the internet.</span><a href="/settings">Make yourself at home <span aria-hidden="true">↗</span></a></footer>
+</div>
+</body></html>{{end}}

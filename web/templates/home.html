@@ -1,0 +1,21 @@
+{{define "home"}}
+<section class="daily-strip" aria-label="Curiosity challenge"><div><p class="eyebrow">Your daily side quest</p><h2>Three little discoveries.</h2><p>{{if .User}}{{if ge .Progress.Today 3}}Trio complete. Enjoy the rest of your day.{{else}}Guess or reveal three new stories. See what sticks.{{end}}{{else}}A quick guess. A small surprise. Something to tell someone.{{end}}</p></div>{{if .User}}<div class="daily-score"><strong>{{.Progress.Daily}} / 3</strong><progress value="{{.Progress.Daily}}" max="3" aria-label="Today's discoveries"></progress><span>{{.Progress.Points}} Curiosity Points</span></div>{{else}}<a class="button secondary" href="/discover?kind=surprise">Try a round ↗</a>{{end}}</section>
+{{if .User}}{{if .Progress.Badges}}<div class="badge-shelf" aria-label="Your badges">{{range .Progress.Badges}}<span>✦ {{.}}</span>{{end}}</div>{{end}}{{end}}
+<section class="home-hero">
+<div class="hero-copy"><p class="eyebrow"><span class="little-dot"></span> A small break. A big world.</p>
+<h1>Where will your <br><em>curiosity</em> take you?</h1>
+<p class="hero-description">Guess first. Get surprised. <br class="desktop-break"> Bring one good story back to your day.</p>
+</div>
+<figure class="hero-photograph"><a href="/discover?kind=place&amp;id=socotra"><img src="/static/photos/socotra.jpg" alt="A real dragon’s blood tree on Socotra’s rocky plateau" width="480" height="360"><span>Somewhere real. Somewhere unexpected. ↗</span></a><figcaption>Socotra, Yemen · Photo: Alex38 / CC BY 4.0 · <a href="https://commons.wikimedia.org/wiki/File:Dragonblood_tree_in_Socotra_2.jpg" target="_blank" rel="noopener noreferrer">Source ↗</a></figcaption></figure>
+</section>
+<section aria-labelledby="choose-heading" class="choose-section">
+<div class="section-label"><h2 id="choose-heading">What are you in the mood for?</h2><span>No agenda needed <span aria-hidden="true">↙</span></span></div>
+<div class="choice-grid">
+<a class="choice choice-place" href="/discover?kind=place"><div class="choice-top"><span class="choice-symbol"><svg aria-hidden="true"><use href="/static/icons.svg#globe"/></svg></span><span class="choice-index">01 / WANDER</span></div><div><h3>Take me <br>somewhere.</h3><p>Hidden corners. Faraway places. <br>A two-minute escape.</p></div><span class="choice-action">Let’s get lost <span class="arrow-circle" aria-hidden="true">↗</span></span></a>
+<a class="choice choice-fact" href="/discover?kind=fact"><div class="choice-top"><span class="choice-symbol"><svg aria-hidden="true"><use href="/static/icons.svg#bulb"/></svg></span><span class="choice-index">02 / WONDER</span></div><div><h3>Tell me <br>something.</h3><p>Real stories that make you <br>say, “Wait, really?”</p></div><span class="choice-action">I’m all ears <span class="arrow-circle" aria-hidden="true">↗</span></span></a>
+<a class="choice choice-surprise" href="/discover?kind=surprise"><div class="choice-top"><span class="choice-symbol"><svg aria-hidden="true"><use href="/static/icons.svg#dice"/></svg></span><span class="choice-index">03 / WHY NOT?</span></div><div><h3>Surprise <br>me.</h3><p>A mystery photo. A quick guess. <br>Let’s see what you’ve got.</p></div><span class="choice-action">Roll with it <span class="arrow-circle" aria-hidden="true">↗</span></span></a>
+</div>
+</section>
+<nav class="fact-topics" aria-label="Fact categories"><span>In a fact mood?</span><a href="/discover?kind=fact">Any topic</a><a href="/discover?kind=fact&amp;category=Space">Space</a><a href="/discover?kind=fact&amp;category=Animals">Animals</a></nav>
+<aside class="home-note"><span class="note-symbol" aria-hidden="true">✳</span><div><h2>Just one more thing? Your call.</h2><p>One discovery at a time. Take what you like, then get on with your day.</p></div><span class="collection-tag">{{.ContentCount}} discoveries to explore</span></aside>
+{{end}}

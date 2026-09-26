@@ -1,0 +1,12 @@
+{{define "enter"}}
+<section class="entry-layout"><div class="entry-intro"><p class="eyebrow">A familiar little place</p><h1>Hey there, <br><em>curious human.</em></h1><p>Pick a username and come on in. Use the same name next time to return to your profile.</p><figure class="entry-photo"><img src="/static/photos/tristan.jpg" width="480" height="280" alt="Homes below the cliffs on Tristan da Cunha"><figcaption>Tristan da Cunha · CTBTO / CC BY 2.0 · <a href="https://commons.wikimedia.org/wiki/File:The_Main_Settlement_on_Tristan_da_Cunha_-_Flickr_-_The_Official_CTBTO_Photostream.jpg" target="_blank" rel="noopener noreferrer">Source ↗</a></figcaption></figure></div>
+<div class="form-panel"><span class="panel-kicker">YOUR CORNER OF CURIO</span><h2>Make yourself at home.</h2><p class="muted">Your name. The household password. You’re in.</p>
+{{if .Error}}<div class="notice error" role="alert">{{.Error}}</div>{{end}}
+<form action="/enter" method="post"><input type="hidden" name="csrf" value="{{.CSRF}}">
+<label for="username">Your username</label><input id="username" name="username" value="{{.Username}}" placeholder="e.g. Venkat" autocomplete="username" autocapitalize="none" spellcheck="false" required minlength="2" maxlength="32" pattern="[A-Za-z0-9][A-Za-z0-9_-]{1,31}" aria-describedby="username-hint"><p class="field-hint" id="username-hint">New here? Pick a name. Been here before? Use your usual one.</p>
+<label for="password">Household password</label><div class="password-field"><input type="password" id="password" name="password" autocomplete="current-password" required maxlength="128" aria-describedby="password-hint"><button type="button" class="reveal-password" data-toggle-password="password" aria-label="Show password" hidden>Show</button></div><p class="field-hint" id="password-hint">The same shared password for everyone. This browser remembers you for 30 days.</p>
+<button type="submit" class="button primary full">Let me in <span aria-hidden="true">↗</span></button></form>
+{{if .GuestEnabled}}<a class="guest-link" href="/">Just having a look? Explore as a guest <span aria-hidden="true">↗</span></a>{{end}}
+<p class="privacy-note">Household profiles share one password. Anyone with it can open any username.</p>
+</div></section>
+{{end}}

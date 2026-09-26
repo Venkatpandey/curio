@@ -1,0 +1,26 @@
+services:
+  curio:
+    image: ${CURIO_IMAGE:-ghcr.io/venkatpandey/curio:latest}
+    build: .
+    restart: unless-stopped
+    ports:
+      - "${CURIO_HOST_PORT:-8090}:8080"
+    volumes:
+      - curio-data:/data
+    environment:
+      # One preset password for every username. Set it in .env, or replace
+      # this value with your quoted household password directly in this file.
+      CURIO_ACCESS_PASSWORD: ${CURIO_ACCESS_PASSWORD:?Set CURIO_ACCESS_PASSWORD in .env}
+      CURIO_BASE_URL: ${CURIO_BASE_URL:-}
+      CURIO_GUEST_ENABLED: ${CURIO_GUEST_ENABLED:-true}
+      CURIO_WIKIMEDIA_ENABLED: ${CURIO_WIKIMEDIA_ENABLED:-true}
+      CURIO_LOG_LEVEL: ${CURIO_LOG_LEVEL:-info}
+      TZ: ${TZ:-Europe/Berlin}
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+volumes:
+  curio-data:

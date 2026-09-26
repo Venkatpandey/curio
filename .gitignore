@@ -1,0 +1,10 @@
+/data/
+/bin/
+.env
+.env.*
+!.env.example
+.DS_Store
+/coverage.out
+/test-results/
+
+/node_modules/

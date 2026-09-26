@@ -1,0 +1,50 @@
+{
+  "tristan": {
+    "url": "/static/photos/tristan.jpg",
+    "source_url": "https://commons.wikimedia.org/wiki/File:The_Main_Settlement_on_Tristan_da_Cunha_-_Flickr_-_The_Official_CTBTO_Photostream.jpg",
+    "artist": "The Official CTBTO Photostream",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/The_Main_Settlement_on_Tristan_da_Cunha_-_Flickr_-_The_Official_CTBTO_Photostream.jpg/1280px-The_Main_Settlement_on_Tristan_da_Cunha_-_Flickr_-_The_Official_CTBTO_Photostream.jpg"
+  },
+  "socotra": {
+    "url": "/static/photos/socotra.jpg",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Dragonblood_tree_in_Socotra_2.jpg",
+    "artist": "Alex38",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0",
+    "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Dragonblood_tree_in_Socotra_2.jpg/1280px-Dragonblood_tree_in_Socotra_2.jpg"
+  },
+  "bryce": {
+    "url": "/static/photos/bryce.jpg",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Bryce_Canyon_Hoodoos.jpg",
+    "artist": "“Jon Zander(digon3)”",
+    "license": "CC BY-SA 3.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c9/Bryce_Canyon_Hoodoos.jpg/1280px-Bryce_Canyon_Hoodoos.jpg"
+  },
+  "venus": {
+    "url": "/static/photos/venus.jpg",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Venus_from_Mariner_10.jpg",
+    "artist": "NASA/JPL-Caltech",
+    "license": "Public domain",
+    "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "download_url": "https://upload.wikimedia.org/wikipedia/commons/0/08/Venus_from_Mariner_10.jpg"
+  },
+  "octopus": {
+    "url": "/static/photos/octopus.jpg",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Pulpo_com%C3%BAn_(Octopus_vulgaris),_Parque_natural_de_la_Arr%C3%A1bida,_Portugal,_2020-07-21,_DD_33.jpg",
+    "artist": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/Pulpo_com%C3%BAn_%28Octopus_vulgaris%29%2C_Parque_natural_de_la_Arr%C3%A1bida%2C_Portugal%2C_2020-07-21%2C_DD_33.jpg/1280px-Pulpo_com%C3%BAn_%28Octopus_vulgaris%29%2C_Parque_natural_de_la_Arr%C3%A1bida%2C_Portugal%2C_2020-07-21%2C_DD_33.jpg"
+  },
+  "neutron": {
+    "url": "/static/photos/neutron.jpg",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Crab_Nebula.jpg",
+    "artist": "NASA, ESA, J. Hester and A. Loll (Arizona State University)",
+    "license": "Public domain",
+    "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/00/Crab_Nebula.jpg/1280px-Crab_Nebula.jpg"
+  }
+}
