@@ -2,6 +2,8 @@
 
 A self-hosted curiosity break. Pick a place, a fact, or a surprise. Take a quick guess, reveal the answer, then decide whether you want the story or another round.
 
+**Developed using AI.** OpenAI Codex helps build Curio’s code, UI, tests, and documentation. Running Curio requires no AI service or AI API key.
+
 Curio runs as one Go server with SQLite, server-rendered HTML, and local assets. It needs one Docker container and one persistent volume.
 
 ## Start with Docker
