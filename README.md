@@ -26,6 +26,19 @@ Profiles have separate settings, but the shared password is household access: an
 
 The named volume `curio-data` holds `/data/curio.db` and SQLite WAL files. Docker initializes its ownership for UID 10001. Do not use `docker compose down -v` unless you intend to delete all stored data.
 
+## Run on a NAS
+
+Copy [deploy/nas/compose.yml](deploy/nas/compose.yml) to a folder on your NAS as `compose.yml`. Replace its example household password, then run:
+
+```sh
+docker compose pull
+docker compose up -d
+```
+
+Open `http://<NAS-IP>:8090` on your phone or computer. This file pulls the public `edge` image, needs no source checkout or build tools, and stores data in a named Docker volume. It requires a username and the same shared password for each profile; set `CURIO_GUEST_ENABLED` to `"true"` to allow guest browsing.
+
+Leave `CURIO_BASE_URL` empty for direct LAN HTTP. If you use a reverse proxy, set it to the exact browser origin, such as `https://curio.example.com`, including any non-default port and no path. Compose treats `$` as interpolation; write `$$` for a literal dollar sign in an inline password. Keep your edited file private.
+
 ## Current build: Phase 4 + first play features
 
 - Simple username plus shared Compose password; separate profile settings and sessions.
@@ -85,7 +98,7 @@ go build -o bin/curio ./cmd/curio
 | `TZ` | `Europe/Berlin` in Compose | Container time zone. |
 | `CURIO_IMAGE` | `ghcr.io/venkatpandey/curio:latest` | Container image name for Compose. |
 
-For access beyond a trusted LAN, terminate HTTPS at your reverse proxy and set `CURIO_BASE_URL` to that HTTPS origin. The proxy must preserve the request Host. Curio ignores forwarded headers when deciding cookie security and rate-limit identity. Authentication limits apply to the proxy address if you put every request behind one proxy.
+For access beyond a trusted LAN, terminate HTTPS at your reverse proxy and set `CURIO_BASE_URL` to that HTTPS origin. Curio explicitly trusts the configured base origin for form submissions, including proxies that rewrite Host. It does not trust arbitrary forwarded headers when checking origins, deciding cookie security, or determining rate-limit identity. Authentication limits apply to the proxy address if you put every request behind one proxy.
 
 PWA installation and service workers need HTTPS or localhost. Plain HTTP on a LAN IP supports normal browsing but does not provide full PWA installation. The service worker caches a generic offline page, not private account pages. When the server loses internet access, locally bundled content still works. When the browser cannot reach the server, it shows a reconnect page.
 

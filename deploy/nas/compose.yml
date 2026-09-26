@@ -1,0 +1,28 @@
+services:
+  curio:
+    image: ghcr.io/venkatpandey/curio:edge
+    restart: unless-stopped
+    ports:
+      - "8090:8080"
+    environment:
+      # Replace with your own password (12–128 bytes).
+      # Everyone enters their username and this same password.
+      # If the password contains $, write $$ for each literal $ in Compose.
+      CURIO_ACCESS_PASSWORD: "change-this-household-password"
+      # Leave empty for direct http://<NAS-IP>:8090 access.
+      # For a reverse proxy, use its exact browser origin, e.g. https://curio.example.com.
+      CURIO_BASE_URL: ""
+      # Set true to also allow browsing without entering a profile.
+      CURIO_GUEST_ENABLED: "false"
+      CURIO_WIKIMEDIA_ENABLED: "true"
+      TZ: "Europe/Berlin"
+    volumes:
+      - curio-data:/data
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+volumes:
+  curio-data:

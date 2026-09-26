@@ -118,7 +118,13 @@ func New(db *store.Store, c config.Config, logger *slog.Logger, version string) 
 	mux.Handle("/", a.withState(func(w http.ResponseWriter, r *http.Request) {
 		a.render(w, r, http.StatusNotFound, page{Title: "Not found", View: "error", Error: "This page wandered off. Head home to find something else."})
 	}))
-	return a.headers(http.NewCrossOriginProtection().Handler(mux)), nil
+	protection := http.NewCrossOriginProtection()
+	if c.BaseURL != "" {
+		if err := protection.AddTrustedOrigin(c.BaseURL); err != nil {
+			return nil, fmt.Errorf("configure trusted origin: %w", err)
+		}
+	}
+	return a.headers(protection.Handler(mux)), nil
 }
 func (a *App) cookieName(name string) string {
 	if a.config.SecureCookies() {
@@ -513,7 +519,9 @@ func (a *App) health(w http.ResponseWriter, r *http.Request) {
 func (a *App) headers(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("X-Content-Type-Options", "nosniff")
-		w.Header().Set("Referrer-Policy", "no-referrer")
+		// Preserve Origin on same-origin form POSTs. On plain HTTP LAN hosts,
+		// browsers omit Sec-Fetch-Site; no-referrer would also make Origin null.
+		w.Header().Set("Referrer-Policy", "same-origin")
 		w.Header().Set("X-Frame-Options", "DENY")
 		w.Header().Set("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'")
 		w.Header().Set("Permissions-Policy", "geolocation=(), camera=(), microphone=()")

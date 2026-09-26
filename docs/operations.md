@@ -61,3 +61,13 @@ The reusable `checks.yml` workflow runs Go checks, isolated Chromium/WebKit smok
 `ci.yml` runs on pull requests, pushes to `main`, and manual dispatch. Only successful main runs publish development images (`edge` and `sha-<commit>`). `release.yml` validates `vMAJOR.MINOR.PATCH` tags, allows prerelease suffixes, reruns all checks, and publishes version tags. Stable tags update `latest`; prereleases do not. The publish workflow includes provenance and an SBOM. Both architectures build with Buildx and QEMU.
 
 To run browser checks locally, install Node.js, run `npm ci`, then `npx playwright install chromium webkit`. Start a disposable Curio server and run `npm run test:browser`. Runtime images contain neither Node.js nor these development dependencies.
+
+## Phone access over LAN HTTP
+
+Use the NAS or laptop’s LAN address, such as `http://192.168.0.10:8090`, rather than `localhost` on the phone. Curio sends `Referrer-Policy: same-origin` so browsers preserve the Origin header on same-origin form submissions while suppressing cross-origin referrers. Plain HTTP LAN pages may omit `Sec-Fetch-Site`, so the server checks Origin against Host instead. Form CSRF tokens remain required.
+
+An older build sent `Referrer-Policy: no-referrer`, which caused browsers to submit `Origin: null` and receive a cross-origin rejection. Update the image, recreate the container, then reload the page before submitting again. Do not bypass origin checks or allow all null origins as a workaround.
+
+For a reverse proxy, set `CURIO_BASE_URL` to the exact external origin. The server trusts that configured origin without accepting arbitrary `X-Forwarded-Host` values. Use an HTTPS base URL only when browsing over HTTPS because it enables Secure cookies.
+
+`scripts/lan-smoke.cjs` tests Chromium and WebKit on a non-loopback HTTP address, verifies the request's Origin and missing Fetch Metadata, and exercises guest quizzes, profile entry, saved answers, favorites, and logout. CI runs it after the ordinary browser suite. Set `CURIO_TEST_LAN_URL` to choose the address explicitly.

@@ -67,3 +67,7 @@ POST `/play` validates CSRF, content ID, and answer bounds. The server checks th
 Migration 004 adds favorites, a reaction timestamp, and per-user recommendation reset timestamps. Existing reactions receive timestamp zero and participate until the user resets. Reset runs in a transaction: clear interests and advance the cutoff. Reaction records remain intact; subsequent reaction updates receive a new timestamp.
 
 Favorite saves/removals are idempotent POSTs with CSRF and session-derived ownership. Collection pages use fixed 12-item pagination and stable ID tie-breaks. Private HTML remains `no-store`. Recommendation weights are computed from current interests and reactions newer than the reset cutoff, with a 25–300 bound. Selection groups eligible stories by category, reserves one in four draws for categories below the strongest available weight, and otherwise samples categories by weight. Equal-weight pools explore uniformly. Explicit filters, unseen-first selection, and immediate-repeat exclusion apply before this step.
+
+## Origin checks on LAN and proxied deployments
+
+Same-origin form POSTs retain Origin under `Referrer-Policy: same-origin`. This is required for plain HTTP LAN browsing, where browsers omit Fetch Metadata and Go falls back to comparing Origin with Host. A configured `CURIO_BASE_URL` is an exact trusted-origin exception for reverse proxies. Neither null origins nor arbitrary forwarded headers receive an exception. The application also validates the form CSRF token on every POST.
