@@ -31,6 +31,26 @@ Never put SQLite on an SMB/NFS share or share one database among several Curio r
 
 The server refreshes Wikipedia and Commons data in the background. Set `CURIO_WIKIMEDIA_ENABLED=false` to stop refreshes; bundled and cached stories, photos and accounts remain available without internet access. Browser-to-server network access is still required for account pages; the service worker intentionally does not cache them.
 
+### NAS DNS failures
+
+If a Wikimedia warning contains `lookup en.wikipedia.org on [::1]:53` and `connection refused`, the resolver is trying the container's IPv6 loopback address, where no DNS server is listening. This can come from the container's DNS configuration or Go falling back to localhost when `/etc/resolv.conf` is missing, unreadable, or has no nameservers. Inspect it as Curio's normal container user:
+
+```sh
+docker compose exec curio cat /etc/resolv.conf
+```
+
+Set a reachable DNS server under `services.curio` in your existing Compose file. Use your router or LAN DNS server if your network blocks public DNS. For networks that allow public DNS, this is an example:
+
+```yaml
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+```
+
+Recreate the container with `docker compose up -d --force-recreate curio`, then check `docker compose exec curio nslookup en.wikipedia.org` and `docker compose exec curio curio healthcheck`. Keep the same project and data volume. If reading `/etc/resolv.conf` fails, correct its Docker/NAS-managed permissions so UID 10001 can read it; do not run Curio as root to work around that failure. Docker documents [container DNS behavior](https://docs.docker.com/engine/network/#dns-services) and the [Compose DNS setting](https://docs.docker.com/reference/compose-file/services/#dns).
+
+Wikimedia warnings do not shut down the server. Set `CURIO_WIKIMEDIA_ENABLED: "false"` to disable optional online refreshes while fixing DNS; bundled and cached content remains available. An `exited with code 0` message indicates a clean exit, such as a Compose stop/recreate or interrupt, but does not identify who initiated it. Use detached mode (`docker compose up -d`) and check the NAS container manager's events if unexpected stops continue.
+
 ## Browser checks
 
 `scripts/browser-smoke.cjs` exercises username entry, settings, logout, profile isolation, quiz/reveal flows, point totals, reactions, daily progress, favorites, collection isolation, mix reset, discovery links, mobile widths, themes, and service-worker cache privacy in Chromium and WebKit. Run it against a disposable server with the password `curio-local-qa-password`, or provide `CURIO_TEST_PASSWORD`. It creates test profiles.

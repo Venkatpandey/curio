@@ -2,6 +2,10 @@ services:
   curio:
     image: ghcr.io/venkatpandey/curio:edge
     restart: unless-stopped
+    # If NAS DNS fails, uncomment these or use your reachable LAN DNS server.
+    # dns:
+    #   - 1.1.1.1
+    #   - 8.8.8.8
     ports:
       - "8090:8080"
     environment:
