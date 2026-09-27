@@ -7,6 +7,8 @@ import (
 	"math/big"
 	"slices"
 	"time"
+
+	"curio/internal/content"
 )
 
 type Preference struct {
@@ -26,7 +28,7 @@ func (p Preference) Label() string {
 	return "Open to it"
 }
 func (s *Store) Preferences(ctx context.Context, uid int64) ([]Preference, error) {
-	rows, err := s.db.QueryContext(ctx, `WITH categories AS (SELECT DISTINCT json_extract(payload,'$.category') AS category FROM content_items UNION SELECT category FROM user_interests WHERE user_id=?) SELECT category,EXISTS(SELECT 1 FROM user_interests i WHERE i.user_id=? AND i.category=categories.category),COALESCE((SELECT SUM(r.value='interesting') FROM reactions r JOIN content_items c ON c.id=r.content_id WHERE r.user_id=? AND json_extract(c.payload,'$.category')=categories.category AND r.updated_at>COALESCE((SELECT reset_at FROM recommendation_resets WHERE user_id=?),-1)),0),COALESCE((SELECT SUM(r.value='not-for-me') FROM reactions r JOIN content_items c ON c.id=r.content_id WHERE r.user_id=? AND json_extract(c.payload,'$.category')=categories.category AND r.updated_at>COALESCE((SELECT reset_at FROM recommendation_resets WHERE user_id=?),-1)),0) FROM categories ORDER BY category`, uid, uid, uid, uid, uid, uid)
+	rows, err := s.db.QueryContext(ctx, `WITH categories AS (SELECT DISTINCT json_extract(payload,'$.category') AS category FROM content_items UNION SELECT category FROM user_interests WHERE user_id=?) SELECT category,EXISTS(SELECT 1 FROM user_interests i WHERE i.user_id=? AND i.category=categories.category),COALESCE((SELECT SUM(r.value='interesting') FROM reactions r WHERE r.user_id=? AND r.category=categories.category AND r.updated_at>? AND r.updated_at>COALESCE((SELECT reset_at FROM recommendation_resets WHERE user_id=?),-1)),0),COALESCE((SELECT SUM(r.value='not-for-me') FROM reactions r WHERE r.user_id=? AND r.category=categories.category AND r.updated_at>? AND r.updated_at>COALESCE((SELECT reset_at FROM recommendation_resets WHERE user_id=?),-1)),0) FROM categories ORDER BY category`, uid, uid, uid, time.Now().Add(-content.Retention).UnixNano(), uid, uid, time.Now().Add(-content.Retention).UnixNano(), uid)
 	if err != nil {
 		return nil, err
 	}

@@ -37,7 +37,7 @@ if (edition) {
       if (!response.ok || !response.headers.get('content-type')?.includes('application/json')) return;
       const fresh = await response.json();
       if (fresh.day !== edition.dataset.editionDay || fresh.revision !== edition.dataset.editionRevision) {
-        message.textContent = fresh.day !== edition.dataset.editionDay ? 'A new daily edition is ready.' : 'Your discovery collection has changed. More to explore.';
+        message.textContent = fresh.day !== edition.dataset.editionDay ? 'A new daily edition is ready.' : 'Your discovery collection has been updated.';
         notice.hidden = false;
       }
     } catch (_) {

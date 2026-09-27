@@ -56,7 +56,7 @@ Leave `CURIO_BASE_URL` empty for direct LAN HTTP. If you use a reverse proxy, se
 - A visible, resettable topic mix with bounded weights and a 25% exploration branch.
 - Non-root Docker image, health endpoint, tests, and CI/release workflow definitions.
 
-“Surprise Me” mixes photo mysteries, true-or-false claims, and two-choice comparisons. Facts cover Animals, History, Nature, Science, Space, and Technology; topic filters come from the available content. Interests and reactions shape recommendations. External fact providers and themed journeys remain future work. See [the roadmap](docs/roadmap.md).
+“Surprise Me” mixes photo mysteries, true-or-false claims, and two-choice comparisons. Facts cover Animals, History, Nature, Science, Space, and Technology; topic filters come from the available content. Interests and reactions shape recommendations. NASA source updates arrive through runtime feeds; three daily personalized editions and themed journeys remain future work. See [the roadmap](docs/roadmap.md).
 
 The importer adds one place at a time, with at least ten seconds between entries. It refreshes cached articles after seven days and backs off on provider errors. Some catalogue entries may be skipped when their article has too little text, no geographic coordinates, or no suitable licensed photograph. This is a bounded location catalogue, not an unrestricted random-article feed.
 
@@ -96,6 +96,7 @@ go build -o bin/curio ./cmd/curio
 | `CURIO_BASE_URL` | Empty | Public origin, e.g. `https://curio.example.com`. HTTPS enables Secure cookies and HSTS. |
 | `CURIO_GUEST_ENABLED` | `true` | Allow unsigned visitors to browse discoveries. |
 | `CURIO_WIKIMEDIA_ENABLED` | `true` | Fetch and refresh place stories in the background. |
+| `CURIO_FEEDS_ENABLED` | `true` | Import NASA science and technology source excerpts every four hours. |
 | `CURIO_LOG_LEVEL` | `info` | `debug`, `info`, `warn`, or `error`. |
 | `TZ` | `Europe/Berlin` in Compose | Container time zone. |
 | `CURIO_IMAGE` | `ghcr.io/venkatpandey/curio:latest` | Container image name for Compose. |
@@ -125,13 +126,13 @@ Architecture and schema decisions live in [docs/architecture.md](docs/architectu
 
 A first reveal earns 1 Curiosity Point. Taking a guess earns 2 more, whether correct or wrong. Each story earns points once per profile; replaying, refreshing, or changing an answer cannot award more. Skipping locks in the 1-point reveal. Guests can guess and read, but do not save scores or reactions.
 
-Reveal three previously uncompleted stories for the daily trio. The day follows the server’s `TZ` setting. Total points and badges persist across restarts. Badges unlock at the first discovery, ten discoveries, and three guesses. There are no timers, streak penalties, or rewards for time spent. The bounded catalogue means new daily discoveries eventually run out until more content arrives.
+Reveal three previously uncompleted stories for the daily trio. The day follows the server’s `TZ` setting. Total points and badges persist across restarts. Badges unlock at the first discovery, ten discoveries, and three guesses. There are no timers, streak penalties, or rewards for time spent. Available new discoveries depend on source supply; Curio does not promise new publications on a fixed schedule.
 
 ## Your collection and mix
 
-Use “Keep this one” to save a discovery. “My collection” holds favorites, recent detours, and your topic mix. These views belong to the signed-in profile and work without JavaScript. Removing a favorite does not remove its history or points.
+Use “Keep this one” to save a discovery. “My collection” holds favorites, recent detours, and your topic mix. These views belong to the signed-in profile and work without JavaScript. Browsing history and reactions expire after seven days. Favorites, explicit interests, and earned points remain; removing an expired feed favorite allows the next cleanup to remove its cached excerpt.
 
-Selection prefers unseen stories, then samples from the older half of eligible history. Categories get a baseline weight of 100, plus 50 for a chosen interest, plus 25 per Interesting reaction and minus 25 per Not for me reaction. Weights stay between 25 and 300. Three quarters of draws use those weights; one quarter chooses uniformly among available categories below the strongest weight, or all categories when tied. A story is then selected uniformly from the chosen category. Topic filters and available unseen content bound the pool. This prevents the larger place catalogue from overwhelming smaller fact categories.
+Selection prefers unseen stories, then samples from the older half of eligible history. Categories get a baseline weight of 100, plus 50 for a chosen interest, plus 25 per Interesting reaction and minus 25 per Not for me reaction from the last seven days (and after the most recent mix reset). Weights stay between 25 and 300. Three quarters of draws use those weights; one quarter chooses uniformly among available categories below the strongest weight, or all categories when tied. A story is then selected uniformly from the chosen category. Topic filters and available unseen content bound the pool. This prevents the larger place catalogue from overwhelming smaller fact categories.
 
 “Reset my mix” clears chosen interests and ignores previous reactions when calculating weights. It keeps reaction records, favorites, history, points, and badges. Changing a reaction after reset makes that reaction count again.
 
@@ -141,4 +142,17 @@ The homepage chooses one place and two facts on the first visit of each day, usi
 
 The homepage checks for changes on return and every five minutes while visible. It shows a link to the latest edition instead of changing content beneath the reader. The checkbox pauses checks; that preference is the only new localStorage value. Catalogue checks require the same access as browsing and return no profile data. Network failures leave the current page usable. Daily picks and quizzes also work without JavaScript.
 
-“New since your last homepage visit” compares the current catalogue size with an HttpOnly browser cookie. Re-fetching existing Wikimedia articles and restarting the app do not count as new content. Today's pinned picks remain the same if content arrives during the day; Surprise Me can select the new arrivals. The importer still uses its bounded 24-place catalogue, and the bundled fact pack grows through app updates. This release does not add an external fact feed, scheduled editorial publishing, or themed journeys.
+“New since your last homepage visit” compares the current catalogue size with an HttpOnly browser cookie. Re-fetching existing Wikimedia articles and restarting the app do not count as new content. Today's pinned picks remain the same if content arrives during the day; Surprise Me can select the new arrivals. The Wikimedia importer still uses its bounded 24-place catalogue, and the bundled fact pack grows through app updates. NASA feeds add new source excerpts at runtime. Catalogue counts can stay unchanged when imports replace expired items; the catalogue fingerprint still triggers a freshness notice. Three daily personalized editions are tracked in #5.
+
+
+## Runtime source updates and seven-day retention
+
+Curio checks the public NASA Science and NASA Technology RSS feeds at startup when due, then every four hours. Each source has its own persisted schedule and bounded retry delay, including `Retry-After`. Set `CURIO_FEEDS_ENABLED=false` to stop fetching. Reading and `/health` never require upstream access, and the starter collection remains available during outages.
+
+The homepage's “Fresh from the source” section shows up to three recent source updates shared across profiles. Each update preserves a short source-authored excerpt, a source link, and separate publication/fetch dates. Automated validation checks provenance, dates, sizes, and content shape; it does not claim human editorial review. These updates have a “Mark as read” action worth one first-completion point and no generated quiz. Source publication frequency varies.
+
+Imported excerpts leave recommendation selection seven days after publication. Hourly cleanup, also run at startup when feeds are disabled, removes expired unsaved payloads and behavior records older than seven days. Re-fetching a cached item cannot extend its expiry. Today's pinned picks remain readable until the next local day; saved favorites remain until removed. Bundled stories and the existing Wikimedia place cache retain their separate offline/cache policy.
+
+Learning uses only recent reactions and browsing history, plus explicitly chosen interests. A compact reaction/category record can survive an article's expiry until its own seven-day cutoff. A minimal completion ledger retains content IDs and award fields so payload cleanup cannot erase points or allow repeat awards. This is a retention policy for cache and behavior, not deletion of profiles, preferences, saved favorites, or achievements. SQLite reuses freed pages; database files do not necessarily shrink on disk after deletion.
+
+Source details, usage links, validation rules, and operational limits: [runtime feeds](docs/runtime-feeds.md).

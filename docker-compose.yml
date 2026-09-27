@@ -14,6 +14,7 @@ services:
       CURIO_BASE_URL: ${CURIO_BASE_URL:-}
       CURIO_GUEST_ENABLED: ${CURIO_GUEST_ENABLED:-true}
       CURIO_WIKIMEDIA_ENABLED: ${CURIO_WIKIMEDIA_ENABLED:-true}
+      CURIO_FEEDS_ENABLED: ${CURIO_FEEDS_ENABLED:-true}
       CURIO_LOG_LEVEL: ${CURIO_LOG_LEVEL:-info}
       TZ: ${TZ:-Europe/Berlin}
     read_only: true

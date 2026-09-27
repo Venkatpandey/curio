@@ -1,0 +1,12 @@
+{{define "feed-update"}}
+<header class="story-heading"><p class="eyebrow">From the source / {{.Item.Category}}</p><h1>{{.Item.Title}}</h1><p class="story-intro">{{.Item.Summary}}</p></header>
+<section class="quick-source" aria-label="Update source">
+ <a href="{{.Item.SourceURL}}" target="_blank" rel="noopener noreferrer">Read the full update at {{.Item.SourceName}} ↗<span class="sr-only"> (opens in a new tab)</span></a>
+ <p>Published <time datetime="{{.Item.Feed.PublishedAt.Format "2006-01-02T15:04:05Z07:00"}}">{{.Item.Feed.PublishedAt.Format "2 Jan 2006, 15:04 MST"}}</time> · Fetched {{.Item.FetchedAt.Format "2 Jan 2006, 15:04 MST"}}</p>
+ <p>Source excerpt. Formatting removed; not independently reviewed by Curio. Unsaved updates leave the catalogue after seven days.</p>
+</section>
+<section id="reveal" class="answer-reveal" aria-label="Discovery progress">
+ {{if .Attempt}}<p>Discovery complete.{{if .User}} 1 point banked.{{end}}</p>{{else}}<div><h2>Finished reading?</h2><p>No quiz for this update.{{if .User}} Mark it read to earn 1 point, once.{{end}}</p></div><form method="post" action="/play"><input type="hidden" name="csrf" value="{{.CSRF}}"><input type="hidden" name="id" value="{{.Item.ID}}"><input type="hidden" name="kind" value="{{.Kind}}"><input type="hidden" name="category" value="{{.FactCategory}}"><button class="button primary" name="answer" value="-1">Mark as read</button></form>{{end}}
+</section>
+{{template "reactions" .}}
+{{end}}
