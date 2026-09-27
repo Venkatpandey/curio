@@ -111,10 +111,13 @@ func TestExtractPreservesDecimalSentences(t *testing.T) {
 		}
 	}
 }
-func TestBundledStoriesHavePhotosAndReadingDepth(t *testing.T) {
+func TestLongFormStoriesHavePhotosAndReadingDepth(t *testing.T) {
 	for _, item := range Items {
 		if err := item.Validate(); err != nil {
 			t.Fatal(item.ID, err)
+		}
+		if item.Round != nil {
+			continue
 		}
 		count := len(strings.Fields(item.Summary))
 		for _, s := range item.Sections {

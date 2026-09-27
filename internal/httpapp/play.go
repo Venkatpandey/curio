@@ -39,7 +39,7 @@ func (a *App) play(w http.ResponseWriter, r *http.Request) {
 		kind = item.Kind
 	}
 	query := url.Values{"kind": {kind}, "id": {item.ID}}
-	if category := r.PostForm.Get("category"); kind == "fact" && (category == "Space" || category == "Animals") {
+	if category := r.PostForm.Get("category"); kind == "fact" && category == item.Category {
 		query.Set("category", category)
 	}
 	if state := stateOf(r); state.session != nil {

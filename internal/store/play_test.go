@@ -101,7 +101,19 @@ func TestPlayPersistsIsolatesAndRejectsDuplicatePoints(t *testing.T) {
 		t.Fatal("replay earned points", p)
 	}
 	item, err := s.Discover(ctx, content.Request{Kind: "fact", Category: "Animals", ExcludeID: "octopus"})
-	if err != nil || item.ID != "octopus" {
-		t.Fatal("single-item category unavailable", err)
+	if err != nil || item.Category != "Animals" || item.ID == "octopus" {
+		t.Fatal("category filter or exclusion failed", err)
+	}
+	single, err := s.Content(ctx, "octopus")
+	if err != nil {
+		t.Fatal(err)
+	}
+	single.Category = "Single item fixture"
+	if err = s.PutContent(ctx, single, nil); err != nil {
+		t.Fatal(err)
+	}
+	only, err := s.Discover(ctx, content.Request{Kind: "fact", Category: single.Category, ExcludeID: single.ID})
+	if err != nil || only.ID != single.ID {
+		t.Fatal("single-item fallback unavailable", err)
 	}
 }

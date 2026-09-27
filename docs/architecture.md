@@ -6,7 +6,7 @@ Curio runs one Go HTTP process with embedded HTML, CSS, JavaScript, and a local 
 
 Phase 1 delivered shared-password username profiles, settings, sessions and the app shell. Phase 2 adds real photography, short reading sections, numeric fact panels, maps, home-distance estimates, stable discovery URLs, cached Wikimedia content and per-user seen history.
 
-Six bundled editorial stories with licensed photographs work from first startup. A serial background worker fills a catalogue of 24 additional places from Wikipedia and Wikimedia Commons. A provider failure never blocks startup or a discovery request. Facts use the local editorial provider. External fact providers and admin tools remain future work.
+Six bundled editorial stories with licensed photographs and 44 sourced quick facts work from first startup. A serial background worker fills a catalogue of 24 additional places from Wikipedia and Wikimedia Commons. A provider failure never blocks startup or a discovery request. Facts use the local editorial provider. External fact providers and admin tools remain future work.
 
 ## Repository
 
@@ -48,7 +48,7 @@ Personal pages use `Cache-Control: no-store`. The service worker caches only pub
 
 ## UI direction
 
-Default to charcoal green, soft warm text, muted moss and plum cards, with a serif headline and system sans body. Keep bright surfaces subdued for night reading. Offer light and system themes as alternatives. The three discovery choices dominate the home screen. One discovery occupies each detail screen. Respect reduced motion and system appearance, expose visible focus, use native form controls and labels, and keep touch targets at least 44 pixels. Discovery photographs include descriptive alternatives, captions, source links and licence credits. Space images identify the observation subject and any mosaic treatment.
+Default to charcoal green, soft warm text, muted moss and plum cards, with a serif headline and system sans body. Keep bright surfaces subdued for night reading. Offer light and system themes as alternatives. A daily photographic cover and three pinned discovery previews lead the home screen. Places use a photographic field-note layout; facts use typographic question panels; Surprise uses a plum and coral palette; collections use a scrapbook shelf. Topic palettes preserve the selected light, dark, or system color scheme. One discovery occupies each detail screen. Respect reduced motion and system appearance, expose visible focus, use native form controls and labels, and keep touch targets at least 44 pixels. Discovery photographs include descriptive alternatives, captions, source links and licence credits. Space images identify the observation subject and any mosaic treatment.
 
 ## Deployment boundary
 
@@ -71,3 +71,11 @@ Favorite saves/removals are idempotent POSTs with CSRF and session-derived owner
 ## Origin checks on LAN and proxied deployments
 
 Same-origin form POSTs retain Origin under `Referrer-Policy: same-origin`. This is required for plain HTTP LAN browsing, where browsers omit Fetch Metadata and Go falls back to comparing Origin with Host. A configured `CURIO_BASE_URL` is an exact trusted-origin exception for reverse proxies. Neither null origins nor arbitrary forwarded headers receive an exception. The application also validates the form CSRF token on every POST.
+
+## Daily editions
+
+Migration 005 adds `daily_editions(profile_id, day, items)`. A transaction stores three content IDs at the first request for a local calendar day. Profile ID zero is the shared guest edition; session-derived IDs isolate signed-in picks and completion markers. Rows older than seven days are pruned when an edition is created. Selection prioritizes uncompleted content, then content outside the previous edition, then unseen content, with a deterministic day/profile/ID hash for tie-breaking. It chooses one place and two facts, preferring different categories when uncompleted content allows it. Homepage previews do not write history or award points.
+
+`GET /freshness` returns a local date, catalogue size, and SHA-256 digest of sorted content IDs under normal browse authorization and `no-store`. IDs, rather than cache timestamps, prevent provider refreshes from looking like new arrivals. The browser checks only while the homepage is visible, at most once per minute on focus and every five minutes otherwise, with an eight-second timeout. A notice offers navigation; neither questions nor previews are replaced automatically. A localStorage boolean stores the pause preference. An HttpOnly cookie records the last homepage catalogue count; neither value contains account information.
+
+Quick facts carry validated two-option quiz data in their stored payloads. Server-side scoring uses that payload, preserves first-completion semantics, and never trusts submitted correctness. Photo credit validation still applies to all places and any fact with a photograph; photo-free facts render typographic artwork. Topic navigation and validation use the categories of actual fact records.

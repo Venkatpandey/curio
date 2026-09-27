@@ -39,11 +39,13 @@ Open `http://<NAS-IP>:8090` on your phone or computer. This file pulls the publi
 
 Leave `CURIO_BASE_URL` empty for direct LAN HTTP. If you use a reverse proxy, set it to the exact browser origin, such as `https://curio.example.com`, including any non-default port and no path. Compose treats `$` as interpolation; write `$$` for a literal dollar sign in an inline password. Keep your edited file private.
 
-## Current build: Phase 4 + first play features
+## Current build: Daily editions and varied play
 
 - Simple username plus shared Compose password; separate profile settings and sessions.
 - Dark reading layout with real photographs, source links, photo credits and licences.
-- Six bundled editorial stories, each about 230–255 words, with facts and figures.
+- Fifty bundled discoveries: six illustrated long reads and 44 short, sourced true-or-false and comparison rounds.
+- A daily cover and three pinned picks per profile, with completion markers and background freshness notices.
+- Distinct Places, Facts, Surprise, and Collection layouts, topic palettes, and reduced-motion-aware reveals.
 - A background Wikimedia importer for a catalogue of 24 geographical places. It fetches article excerpts, coordinates and licensed Commons photographs, then stores them in SQLite.
 - Persistent per-user seen tracking: show unseen content first, then sample from older stories. Guests keep a bounded recent list in a cookie.
 - Stable discovery links, maps, and approximate straight-line distance from an optional saved home location.
@@ -54,11 +56,11 @@ Leave `CURIO_BASE_URL` empty for direct LAN HTTP. If you use a reverse proxy, se
 - A visible, resettable topic mix with bounded weights and a 25% exploration branch.
 - Non-root Docker image, health endpoint, tests, and CI/release workflow definitions.
 
-“Surprise Me” mixes place and fact quizzes. The initial fact provider contains three editorial stories across Space and Animals; place questions use six editorial quizzes or the imported place’s location. Interests and reactions shape recommendations. External fact providers, more fact categories, and more game types remain future work. See [the roadmap](docs/roadmap.md).
+“Surprise Me” mixes photo mysteries, true-or-false claims, and two-choice comparisons. Facts cover Animals, History, Nature, Science, Space, and Technology; topic filters come from the available content. Interests and reactions shape recommendations. External fact providers and themed journeys remain future work. See [the roadmap](docs/roadmap.md).
 
 The importer adds one place at a time, with at least ten seconds between entries. It refreshes cached articles after seven days and backs off on provider errors. Some catalogue entries may be skipped when their article has too little text, no geographic coordinates, or no suitable licensed photograph. This is a bounded location catalogue, not an unrestricted random-article feed.
 
-Every reading page includes its sources. Live article excerpts retain Wikipedia wording, identify the retrieval date, and link the CC BY-SA 4.0 licence. Editorial stories identify their review date. Photos carry separate creator/licence links; telescope and spacecraft pictures explain what the image represents. [Bundled photo credits](web/static/photos/ATTRIBUTION.md) document the assets distributed with the app.
+Every reading page includes its sources. Short fact cards link to NASA, NOAA, USGS, CERN, or the National Park Service and carry a review date; they use typographic artwork rather than unrelated photographs. Live article excerpts retain Wikipedia wording, identify the retrieval date, and link the CC BY-SA 4.0 licence. Editorial stories identify their review date. Photos carry separate creator/licence links; telescope and spacecraft pictures explain what the image represents. [Bundled photo credits](web/static/photos/ATTRIBUTION.md) document the assets distributed with the app.
 
 Curio serves photos locally. The browser makes no requests to Wikimedia during ordinary reading. The server contacts Wikimedia in the background; set `CURIO_WIKIMEDIA_ENABLED=false` to disable this. Existing cached stories and photographs, plus the bundled collection, remain available without internet access.
 
@@ -132,3 +134,11 @@ Use “Keep this one” to save a discovery. “My collection” holds favorites
 Selection prefers unseen stories, then samples from the older half of eligible history. Categories get a baseline weight of 100, plus 50 for a chosen interest, plus 25 per Interesting reaction and minus 25 per Not for me reaction. Weights stay between 25 and 300. Three quarters of draws use those weights; one quarter chooses uniformly among available categories below the strongest weight, or all categories when tied. A story is then selected uniformly from the chosen category. Topic filters and available unseen content bound the pool. This prevents the larger place catalogue from overwhelming smaller fact categories.
 
 “Reset my mix” clears chosen interests and ignores previous reactions when calculating weights. It keeps reaction records, favorites, history, points, and badges. Changing a reaction after reset makes that reaction count again.
+
+## Daily editions and freshness
+
+The homepage chooses one place and two facts on the first visit of each day, using the server’s `TZ` setting. Picks stay fixed for that profile through refreshes, scoring, new imports, and restarts. Selection prefers uncompleted stories, avoids the previous edition when possible, and mixes fact categories. Guest visitors share a public daily edition. Opening the homepage does not mark its previews as seen.
+
+The homepage checks for changes on return and every five minutes while visible. It shows a link to the latest edition instead of changing content beneath the reader. The checkbox pauses checks; that preference is the only new localStorage value. Catalogue checks require the same access as browsing and return no profile data. Network failures leave the current page usable. Daily picks and quizzes also work without JavaScript.
+
+“New since your last homepage visit” compares the current catalogue size with an HttpOnly browser cookie. Re-fetching existing Wikimedia articles and restarting the app do not count as new content. Today's pinned picks remain the same if content arrives during the day; Surprise Me can select the new arrivals. The importer still uses its bounded 24-place catalogue, and the bundled fact pack grows through app updates. This release does not add an external fact feed, scheduled editorial publishing, or themed journeys.
