@@ -1,0 +1,1718 @@
+[
+  {
+    "id": "mercury-heat",
+    "kind": "fact",
+    "title": "Closest does not mean hottest",
+    "summary": "Venus is hotter. Its thick atmosphere traps heat; Mercury has only a thin exosphere.",
+    "category": "Space",
+    "region": "Hottest planet",
+    "source_name": "NASA · Mercury",
+    "source_url": "https://science.nasa.gov/mercury/facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "Venus",
+        "label": "Hottest planet"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Venus is hotter. Its thick atmosphere traps heat; Mercury has only a thin exosphere."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Mercury",
+        "url": "https://science.nasa.gov/mercury/facts/"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "Mercury is the hottest planet.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 1,
+      "explanation": "Venus is hotter. Its thick atmosphere traps heat; Mercury has only a thin exosphere."
+    }
+  },
+  {
+    "id": "mercury-clock",
+    "kind": "fact",
+    "title": "A sunrise takes its time",
+    "summary": "Sunrise to sunrise takes about 176 Earth days. One orbit takes only 88.",
+    "category": "Space",
+    "region": "Solar day",
+    "source_name": "NASA · Mercury",
+    "source_url": "https://science.nasa.gov/mercury/facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "176 days",
+        "label": "Solar day"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Sunrise to sunrise takes about 176 Earth days. One orbit takes only 88."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Mercury",
+        "url": "https://science.nasa.gov/mercury/facts/"
+      }
+    ],
+    "quiz": {
+      "format": "comparison",
+      "question": "Which lasts longer on Mercury?",
+      "options": [
+        "One solar day",
+        "One year"
+      ],
+      "answer": 0,
+      "explanation": "Sunrise to sunrise takes about 176 Earth days. One orbit takes only 88."
+    }
+  },
+  {
+    "id": "mercury-size",
+    "kind": "fact",
+    "title": "A small world",
+    "summary": "Mercury is slightly wider than our Moon, yet the smallest of the eight planets.",
+    "category": "Space",
+    "region": "Mercury’s radius",
+    "source_name": "NASA · Mercury",
+    "source_url": "https://science.nasa.gov/mercury/facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "2,440 km",
+        "label": "Mercury’s radius"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Mercury is slightly wider than our Moon, yet the smallest of the eight planets."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Mercury",
+        "url": "https://science.nasa.gov/mercury/facts/"
+      }
+    ],
+    "quiz": {
+      "format": "comparison",
+      "question": "Which is wider?",
+      "options": [
+        "Earth’s Moon",
+        "Mercury"
+      ],
+      "answer": 1,
+      "explanation": "Mercury is slightly wider than our Moon, yet the smallest of the eight planets."
+    }
+  },
+  {
+    "id": "mercury-moons",
+    "kind": "fact",
+    "title": "No moonrise here",
+    "summary": "Mercury has neither moons nor rings. Its cratered landscape resembles our Moon.",
+    "category": "Space",
+    "region": "Natural moons",
+    "source_name": "NASA · Mercury",
+    "source_url": "https://science.nasa.gov/mercury/facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "0",
+        "label": "Natural moons"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Mercury has neither moons nor rings. Its cratered landscape resembles our Moon."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Mercury",
+        "url": "https://science.nasa.gov/mercury/facts/"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "Mercury has no moons.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "Mercury has neither moons nor rings. Its cratered landscape resembles our Moon."
+    }
+  },
+  {
+    "id": "venus-sunrise",
+    "kind": "fact",
+    "title": "A different sunrise",
+    "summary": "Venus rotates opposite to most planets, so its Sun would rise in the west.",
+    "category": "Space",
+    "region": "Sunrise direction",
+    "source_name": "NASA · Venus",
+    "source_url": "https://science.nasa.gov/venus/venus-facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "West",
+        "label": "Sunrise direction"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Venus rotates opposite to most planets, so its Sun would rise in the west."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Venus",
+        "url": "https://science.nasa.gov/venus/venus-facts/"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "On Venus, the Sun would rise in the west.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "Venus rotates opposite to most planets, so its Sun would rise in the west."
+    }
+  },
+  {
+    "id": "venus-pressure",
+    "kind": "fact",
+    "title": "Under pressure",
+    "summary": "Venus has roughly 93 times Earth’s sea-level atmospheric pressure.",
+    "category": "Space",
+    "region": "Earth sea-level pressure",
+    "source_name": "NASA · Venus",
+    "source_url": "https://science.nasa.gov/venus/venus-facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "≈93×",
+        "label": "Earth sea-level pressure"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Venus has roughly 93 times Earth’s sea-level atmospheric pressure."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Venus",
+        "url": "https://science.nasa.gov/venus/venus-facts/"
+      }
+    ],
+    "quiz": {
+      "format": "comparison",
+      "question": "Which has higher surface atmospheric pressure?",
+      "options": [
+        "Venus",
+        "Earth"
+      ],
+      "answer": 0,
+      "explanation": "Venus has roughly 93 times Earth’s sea-level atmospheric pressure."
+    }
+  },
+  {
+    "id": "venus-size",
+    "kind": "fact",
+    "title": "Almost twins",
+    "summary": "Venus is similar in size to Earth, but slightly smaller.",
+    "category": "Space",
+    "region": "Planetary size",
+    "source_name": "NASA · Venus",
+    "source_url": "https://science.nasa.gov/venus/venus-facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "Almost twins",
+        "label": "Planetary size"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Venus is similar in size to Earth, but slightly smaller."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Venus",
+        "url": "https://science.nasa.gov/venus/venus-facts/"
+      }
+    ],
+    "quiz": {
+      "format": "comparison",
+      "question": "Which planet is slightly wider?",
+      "options": [
+        "Venus",
+        "Earth"
+      ],
+      "answer": 1,
+      "explanation": "Venus is similar in size to Earth, but slightly smaller."
+    }
+  },
+  {
+    "id": "venus-clouds",
+    "kind": "fact",
+    "title": "Not water clouds",
+    "summary": "Venus’s atmosphere contains clouds of sulfuric acid above its intensely hot surface.",
+    "category": "Space",
+    "region": "Cloud droplets",
+    "source_name": "NASA · Venus",
+    "source_url": "https://science.nasa.gov/venus/venus-facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "Sulfuric acid",
+        "label": "Cloud droplets"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Venus’s atmosphere contains clouds of sulfuric acid above its intensely hot surface."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Venus",
+        "url": "https://science.nasa.gov/venus/venus-facts/"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "Venus’s thick clouds contain sulfuric acid.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "Venus’s atmosphere contains clouds of sulfuric acid above its intensely hot surface."
+    }
+  },
+  {
+    "id": "earth-name",
+    "kind": "fact",
+    "title": "The name under your feet",
+    "summary": "Earth’s name has Old English and Germanic roots meaning ground, rather than a Greek or Roman deity.",
+    "category": "Space",
+    "region": "Name origin",
+    "source_name": "NASA · Earth",
+    "source_url": "https://science.nasa.gov/earth/facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "Ground",
+        "label": "Name origin"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Earth’s name has Old English and Germanic roots meaning ground, rather than a Greek or Roman deity."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Earth",
+        "url": "https://science.nasa.gov/earth/facts/"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "Earth’s English name comes from a Roman god.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 1,
+      "explanation": "Earth’s name has Old English and Germanic roots meaning ground, rather than a Greek or Roman deity."
+    }
+  },
+  {
+    "id": "earth-light",
+    "kind": "fact",
+    "title": "Sunlight has a travel time",
+    "summary": "Sunlight takes about eight minutes to reach Earth.",
+    "category": "Space",
+    "region": "Sunlight travel time",
+    "source_name": "NASA · Earth",
+    "source_url": "https://science.nasa.gov/earth/facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "≈8 minutes",
+        "label": "Sunlight travel time"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Sunlight takes about eight minutes to reach Earth."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Earth",
+        "url": "https://science.nasa.gov/earth/facts/"
+      }
+    ],
+    "quiz": {
+      "format": "comparison",
+      "question": "Which takes longer?",
+      "options": [
+        "Sunlight reaching Earth",
+        "One minute"
+      ],
+      "answer": 0,
+      "explanation": "Sunlight takes about eight minutes to reach Earth."
+    }
+  },
+  {
+    "id": "earth-rock",
+    "kind": "fact",
+    "title": "Largest of the rocky worlds",
+    "summary": "Earth is the largest rocky planet, although four giant planets are larger.",
+    "category": "Space",
+    "region": "Equatorial diameter",
+    "source_name": "NASA · Earth",
+    "source_url": "https://science.nasa.gov/earth/facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "12,756 km",
+        "label": "Equatorial diameter"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Earth is the largest rocky planet, although four giant planets are larger."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Earth",
+        "url": "https://science.nasa.gov/earth/facts/"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "Earth is the largest terrestrial planet.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "Earth is the largest rocky planet, although four giant planets are larger."
+    }
+  },
+  {
+    "id": "earth-year",
+    "kind": "fact",
+    "title": "The spare fraction",
+    "summary": "Earth takes about 365.25 days to orbit the Sun. Calendar leap days account for the extra fraction.",
+    "category": "Space",
+    "region": "Orbital period",
+    "source_name": "NASA · Earth",
+    "source_url": "https://science.nasa.gov/earth/facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "≈365.25 days",
+        "label": "Orbital period"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Earth takes about 365.25 days to orbit the Sun. Calendar leap days account for the extra fraction."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Earth",
+        "url": "https://science.nasa.gov/earth/facts/"
+      }
+    ],
+    "quiz": {
+      "format": "comparison",
+      "question": "Which lasts longer?",
+      "options": [
+        "365 days",
+        "One Earth orbit"
+      ],
+      "answer": 1,
+      "explanation": "Earth takes about 365.25 days to orbit the Sun. Calendar leap days account for the extra fraction."
+    }
+  },
+  {
+    "id": "mars-rotation",
+    "kind": "fact",
+    "title": "A familiar length of day",
+    "summary": "Mars rotates in about 24.6 hours; Earth takes about 23.9 hours relative to distant stars.",
+    "category": "Space",
+    "region": "Mars rotation",
+    "source_name": "NASA · Mars",
+    "source_url": "https://science.nasa.gov/mars/facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "24.6 hours",
+        "label": "Mars rotation"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Mars rotates in about 24.6 hours; Earth takes about 23.9 hours relative to distant stars."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Mars",
+        "url": "https://science.nasa.gov/mars/facts/"
+      }
+    ],
+    "quiz": {
+      "format": "comparison",
+      "question": "Which takes longer to rotate once?",
+      "options": [
+        "Earth",
+        "Mars"
+      ],
+      "answer": 1,
+      "explanation": "Mars rotates in about 24.6 hours; Earth takes about 23.9 hours relative to distant stars."
+    }
+  },
+  {
+    "id": "mars-year",
+    "kind": "fact",
+    "title": "A longer wait for birthdays",
+    "summary": "A Martian orbit takes about 687 Earth days.",
+    "category": "Space",
+    "region": "Mars year in Earth days",
+    "source_name": "NASA · Mars",
+    "source_url": "https://science.nasa.gov/mars/facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "687 days",
+        "label": "Mars year in Earth days"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "A Martian orbit takes about 687 Earth days."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Mars",
+        "url": "https://science.nasa.gov/mars/facts/"
+      }
+    ],
+    "quiz": {
+      "format": "comparison",
+      "question": "Which planet has the longer year?",
+      "options": [
+        "Mars",
+        "Earth"
+      ],
+      "answer": 0,
+      "explanation": "A Martian orbit takes about 687 Earth days."
+    }
+  },
+  {
+    "id": "mars-rust",
+    "kind": "fact",
+    "title": "The red is rust",
+    "summary": "Oxidized iron minerals in Martian soil give the planet its rusty appearance.",
+    "category": "Space",
+    "region": "Source of red color",
+    "source_name": "NASA · Mars",
+    "source_url": "https://science.nasa.gov/mars/facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "Iron oxides",
+        "label": "Source of red color"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Oxidized iron minerals in Martian soil give the planet its rusty appearance."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Mars",
+        "url": "https://science.nasa.gov/mars/facts/"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "Iron minerals help give Mars its red color.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "Oxidized iron minerals in Martian soil give the planet its rusty appearance."
+    }
+  },
+  {
+    "id": "mars-moons",
+    "kind": "fact",
+    "title": "A pair of small companions",
+    "summary": "Phobos and Deimos are small, irregularly shaped moons.",
+    "category": "Space",
+    "region": "Martian moons",
+    "source_name": "NASA · Mars",
+    "source_url": "https://science.nasa.gov/mars/facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "2",
+        "label": "Martian moons"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Phobos and Deimos are small, irregularly shaped moons."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Mars",
+        "url": "https://science.nasa.gov/mars/facts/"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "Mars has two moons.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "Phobos and Deimos are small, irregularly shaped moons."
+    }
+  },
+  {
+    "id": "jupiter-spin",
+    "kind": "fact",
+    "title": "The giant spins fast",
+    "summary": "Jupiter completes a rotation in about 9.9 hours, the shortest rotation period of any planet.",
+    "category": "Space",
+    "region": "Rotation period",
+    "source_name": "NASA · Jupiter",
+    "source_url": "https://science.nasa.gov/jupiter/jupiter-facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "9.9 hours",
+        "label": "Rotation period"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Jupiter completes a rotation in about 9.9 hours, the shortest rotation period of any planet."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Jupiter",
+        "url": "https://science.nasa.gov/jupiter/jupiter-facts/"
+      }
+    ],
+    "quiz": {
+      "format": "comparison",
+      "question": "Which rotates faster?",
+      "options": [
+        "Earth",
+        "Jupiter"
+      ],
+      "answer": 1,
+      "explanation": "Jupiter completes a rotation in about 9.9 hours, the shortest rotation period of any planet."
+    }
+  },
+  {
+    "id": "jupiter-storm",
+    "kind": "fact",
+    "title": "A storm on a giant",
+    "summary": "The Great Red Spot is an enormous atmospheric storm.",
+    "category": "Space",
+    "region": "Great Red Spot",
+    "source_name": "NASA · Jupiter",
+    "source_url": "https://science.nasa.gov/jupiter/jupiter-facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "Storm",
+        "label": "Great Red Spot"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "The Great Red Spot is an enormous atmospheric storm."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Jupiter",
+        "url": "https://science.nasa.gov/jupiter/jupiter-facts/"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "The Great Red Spot is a solid mountain.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 1,
+      "explanation": "The Great Red Spot is an enormous atmospheric storm."
+    }
+  },
+  {
+    "id": "jupiter-moon",
+    "kind": "fact",
+    "title": "A moon bigger than a planet",
+    "summary": "Jupiter’s moon Ganymede is wider than Mercury. Size alone does not determine whether an object is a planet.",
+    "category": "Space",
+    "region": "Larger diameter",
+    "source_name": "NASA · Jupiter",
+    "source_url": "https://science.nasa.gov/jupiter/jupiter-facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "Ganymede",
+        "label": "Larger diameter"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Jupiter’s moon Ganymede is wider than Mercury. Size alone does not determine whether an object is a planet."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Jupiter",
+        "url": "https://science.nasa.gov/jupiter/jupiter-facts/"
+      }
+    ],
+    "quiz": {
+      "format": "comparison",
+      "question": "Which is larger in diameter?",
+      "options": [
+        "Ganymede",
+        "Mercury"
+      ],
+      "answer": 0,
+      "explanation": "Jupiter’s moon Ganymede is wider than Mercury. Size alone does not determine whether an object is a planet."
+    }
+  },
+  {
+    "id": "jupiter-rings",
+    "kind": "fact",
+    "title": "Faint rings count too",
+    "summary": "Jupiter has a faint ring system, unlike Saturn’s bright, prominent rings.",
+    "category": "Space",
+    "region": "Jupiter’s ring system",
+    "source_name": "NASA · Jupiter",
+    "source_url": "https://science.nasa.gov/jupiter/jupiter-facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "Faint rings",
+        "label": "Jupiter’s ring system"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Jupiter has a faint ring system, unlike Saturn’s bright, prominent rings."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Jupiter",
+        "url": "https://science.nasa.gov/jupiter/jupiter-facts/"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "Jupiter has rings.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "Jupiter has a faint ring system, unlike Saturn’s bright, prominent rings."
+    }
+  },
+  {
+    "id": "saturn-density",
+    "kind": "fact",
+    "title": "A surprisingly light giant",
+    "summary": "Saturn is the only planet with an average density below that of water.",
+    "category": "Space",
+    "region": "Average density",
+    "source_name": "NASA · Saturn",
+    "source_url": "https://science.nasa.gov/saturn/facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "Less than water",
+        "label": "Average density"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Saturn is the only planet with an average density below that of water."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Saturn",
+        "url": "https://science.nasa.gov/saturn/facts/"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "Saturn’s average density is lower than water’s.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "Saturn is the only planet with an average density below that of water."
+    }
+  },
+  {
+    "id": "saturn-year",
+    "kind": "fact",
+    "title": "A slow trip around the Sun",
+    "summary": "Saturn needs about 29.4 Earth years to complete an orbit.",
+    "category": "Space",
+    "region": "Orbital period",
+    "source_name": "NASA · Saturn",
+    "source_url": "https://science.nasa.gov/saturn/facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "29.4 years",
+        "label": "Orbital period"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Saturn needs about 29.4 Earth years to complete an orbit."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Saturn",
+        "url": "https://science.nasa.gov/saturn/facts/"
+      }
+    ],
+    "quiz": {
+      "format": "comparison",
+      "question": "Which lasts longer?",
+      "options": [
+        "Ten Earth years",
+        "One Saturn year"
+      ],
+      "answer": 1,
+      "explanation": "Saturn needs about 29.4 Earth years to complete an orbit."
+    }
+  },
+  {
+    "id": "saturn-rings",
+    "kind": "fact",
+    "title": "Countless pieces",
+    "summary": "The rings contain countless pieces of ice and rock, ranging greatly in size.",
+    "category": "Space",
+    "region": "Ring material",
+    "source_name": "NASA · Saturn",
+    "source_url": "https://science.nasa.gov/saturn/facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "Ice and rock",
+        "label": "Ring material"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "The rings contain countless pieces of ice and rock, ranging greatly in size."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Saturn",
+        "url": "https://science.nasa.gov/saturn/facts/"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "Saturn’s rings form one solid sheet.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 1,
+      "explanation": "The rings contain countless pieces of ice and rock, ranging greatly in size."
+    }
+  },
+  {
+    "id": "saturn-hexagon",
+    "kind": "fact",
+    "title": "A six-sided weather pattern",
+    "summary": "A jet stream near Saturn’s north pole forms a six-sided pattern.",
+    "category": "Space",
+    "region": "Polar jet stream",
+    "source_name": "NASA · Saturn",
+    "source_url": "https://science.nasa.gov/saturn/facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "6 sides",
+        "label": "Polar jet stream"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "A jet stream near Saturn’s north pole forms a six-sided pattern."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Saturn",
+        "url": "https://science.nasa.gov/saturn/facts/"
+      }
+    ],
+    "quiz": {
+      "format": "comparison",
+      "question": "Which shape appears in Saturn’s north-polar jet stream?",
+      "options": [
+        "Triangle",
+        "Hexagon"
+      ],
+      "answer": 1,
+      "explanation": "A jet stream near Saturn’s north pole forms a six-sided pattern."
+    }
+  },
+  {
+    "id": "uranus-tilt",
+    "kind": "fact",
+    "title": "A world on its side",
+    "summary": "Uranus has an axial tilt of about 98 degrees, producing extreme seasons.",
+    "category": "Space",
+    "region": "Axial tilt",
+    "source_name": "NASA · Uranus",
+    "source_url": "https://science.nasa.gov/uranus/facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "≈98°",
+        "label": "Axial tilt"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Uranus has an axial tilt of about 98 degrees, producing extreme seasons."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Uranus",
+        "url": "https://science.nasa.gov/uranus/facts/"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "Uranus rotates almost on its side.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "Uranus has an axial tilt of about 98 degrees, producing extreme seasons."
+    }
+  },
+  {
+    "id": "uranus-year",
+    "kind": "fact",
+    "title": "A very long year",
+    "summary": "Uranus takes about 84 Earth years to orbit the Sun.",
+    "category": "Space",
+    "region": "Orbital period",
+    "source_name": "NASA · Uranus",
+    "source_url": "https://science.nasa.gov/uranus/facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "84 years",
+        "label": "Orbital period"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Uranus takes about 84 Earth years to orbit the Sun."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Uranus",
+        "url": "https://science.nasa.gov/uranus/facts/"
+      }
+    ],
+    "quiz": {
+      "format": "comparison",
+      "question": "Which is longer?",
+      "options": [
+        "One Uranus year",
+        "Fifty Earth years"
+      ],
+      "answer": 0,
+      "explanation": "Uranus takes about 84 Earth years to orbit the Sun."
+    }
+  },
+  {
+    "id": "uranus-discovery",
+    "kind": "fact",
+    "title": "A telescope changes the map",
+    "summary": "William Herschel identified Uranus in 1781 with a telescope.",
+    "category": "Space",
+    "region": "Discovery year",
+    "source_name": "NASA · Uranus",
+    "source_url": "https://science.nasa.gov/uranus/facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "1781",
+        "label": "Discovery year"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "William Herschel identified Uranus in 1781 with a telescope."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Uranus",
+        "url": "https://science.nasa.gov/uranus/facts/"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "Uranus was discovered with a telescope.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "William Herschel identified Uranus in 1781 with a telescope."
+    }
+  },
+  {
+    "id": "uranus-diameter",
+    "kind": "fact",
+    "title": "Size and mass can disagree",
+    "summary": "Uranus is wider than Neptune, but Neptune has more mass.",
+    "category": "Space",
+    "region": "Larger diameter",
+    "source_name": "NASA · Uranus",
+    "source_url": "https://science.nasa.gov/uranus/facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "Uranus",
+        "label": "Larger diameter"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Uranus is wider than Neptune, but Neptune has more mass."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Uranus",
+        "url": "https://science.nasa.gov/uranus/facts/"
+      }
+    ],
+    "quiz": {
+      "format": "comparison",
+      "question": "Which is wider?",
+      "options": [
+        "Neptune",
+        "Uranus"
+      ],
+      "answer": 1,
+      "explanation": "Uranus is wider than Neptune, but Neptune has more mass."
+    }
+  },
+  {
+    "id": "neptune-prediction",
+    "kind": "fact",
+    "title": "Mathematics finds a planet",
+    "summary": "Astronomers used deviations in Uranus’s orbit to predict where to look for Neptune in 1846.",
+    "category": "Space",
+    "region": "Discovery year",
+    "source_name": "NASA · Neptune",
+    "source_url": "https://science.nasa.gov/neptune/neptune-facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "1846",
+        "label": "Discovery year"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Astronomers used deviations in Uranus’s orbit to predict where to look for Neptune in 1846."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Neptune",
+        "url": "https://science.nasa.gov/neptune/neptune-facts/"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "Neptune’s position was predicted before its discovery.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "Astronomers used deviations in Uranus’s orbit to predict where to look for Neptune in 1846."
+    }
+  },
+  {
+    "id": "neptune-year",
+    "kind": "fact",
+    "title": "One orbit takes generations",
+    "summary": "Neptune takes about 165 Earth years to orbit the Sun.",
+    "category": "Space",
+    "region": "Orbital period",
+    "source_name": "NASA · Neptune",
+    "source_url": "https://science.nasa.gov/neptune/neptune-facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "165 years",
+        "label": "Orbital period"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Neptune takes about 165 Earth years to orbit the Sun."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Neptune",
+        "url": "https://science.nasa.gov/neptune/neptune-facts/"
+      }
+    ],
+    "quiz": {
+      "format": "comparison",
+      "question": "Which lasts longer?",
+      "options": [
+        "One Neptune year",
+        "One century"
+      ],
+      "answer": 0,
+      "explanation": "Neptune takes about 165 Earth years to orbit the Sun."
+    }
+  },
+  {
+    "id": "neptune-light",
+    "kind": "fact",
+    "title": "Four hours from sunlight",
+    "summary": "Sunlight takes roughly four hours to reach Neptune.",
+    "category": "Space",
+    "region": "Sunlight travel time",
+    "source_name": "NASA · Neptune",
+    "source_url": "https://science.nasa.gov/neptune/neptune-facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "≈4 hours",
+        "label": "Sunlight travel time"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Sunlight takes roughly four hours to reach Neptune."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Neptune",
+        "url": "https://science.nasa.gov/neptune/neptune-facts/"
+      }
+    ],
+    "quiz": {
+      "format": "comparison",
+      "question": "Which takes longer?",
+      "options": [
+        "Sunlight reaching Neptune",
+        "One hour"
+      ],
+      "answer": 0,
+      "explanation": "Sunlight takes roughly four hours to reach Neptune."
+    }
+  },
+  {
+    "id": "neptune-triton",
+    "kind": "fact",
+    "title": "A moon going against the flow",
+    "summary": "Triton’s retrograde orbit suggests that Neptune may have captured it.",
+    "category": "Space",
+    "region": "Triton’s orbit",
+    "source_name": "NASA · Neptune",
+    "source_url": "https://science.nasa.gov/neptune/neptune-facts/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "Retrograde",
+        "label": "Triton’s orbit"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Triton’s retrograde orbit suggests that Neptune may have captured it."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NASA · Neptune",
+        "url": "https://science.nasa.gov/neptune/neptune-facts/"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "Triton orbits opposite to Neptune’s rotation.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "Triton’s retrograde orbit suggests that Neptune may have captured it."
+    }
+  },
+  {
+    "id": "coral-animal",
+    "kind": "fact",
+    "title": "An animal that stays put",
+    "summary": "Corals are animals. Their polyps catch food with tentacles, even though colonies can look like plants.",
+    "category": "Animals",
+    "region": "Coral animals",
+    "source_name": "NOAA · Corals",
+    "source_url": "https://oceanservice.noaa.gov/facts/coral.html",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "Polyps",
+        "label": "Coral animals"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Corals are animals. Their polyps catch food with tentacles, even though colonies can look like plants."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NOAA · Corals",
+        "url": "https://oceanservice.noaa.gov/facts/coral.html"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "Corals are plants.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 1,
+      "explanation": "Corals are animals. Their polyps catch food with tentacles, even though colonies can look like plants."
+    }
+  },
+  {
+    "id": "coral-bleaching",
+    "kind": "fact",
+    "title": "White does not always mean dead",
+    "summary": "Bleached corals have lost their symbiotic algae. They can survive, but face greater stress and risk of death.",
+    "category": "Animals",
+    "region": "Lost during bleaching",
+    "source_name": "NOAA · Corals",
+    "source_url": "https://oceanservice.noaa.gov/facts/coral.html",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "Algae",
+        "label": "Lost during bleaching"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Bleached corals have lost their symbiotic algae. They can survive, but face greater stress and risk of death."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NOAA · Corals",
+        "url": "https://oceanservice.noaa.gov/facts/coral.html"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "A bleached coral is always dead.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 1,
+      "explanation": "Bleached corals have lost their symbiotic algae. They can survive, but face greater stress and risk of death."
+    }
+  },
+  {
+    "id": "water-ice",
+    "kind": "fact",
+    "title": "Why ice stays on top",
+    "summary": "Ordinary ice is less dense than liquid water, which is why it floats.",
+    "category": "Science",
+    "region": "Denser phase",
+    "source_name": "USGS · Water density",
+    "source_url": "https://www.usgs.gov/special-topics/water-science-school/science/water-density",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "Liquid water",
+        "label": "Denser phase"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Ordinary ice is less dense than liquid water, which is why it floats."
+      }
+    ],
+    "sources": [
+      {
+        "name": "USGS · Water density",
+        "url": "https://www.usgs.gov/special-topics/water-science-school/science/water-density"
+      }
+    ],
+    "quiz": {
+      "format": "comparison",
+      "question": "Which is denser under ordinary conditions?",
+      "options": [
+        "Liquid water",
+        "Ordinary ice"
+      ],
+      "answer": 0,
+      "explanation": "Ordinary ice is less dense than liquid water, which is why it floats."
+    }
+  },
+  {
+    "id": "water-peak",
+    "kind": "fact",
+    "title": "The cold-water twist",
+    "summary": "Water reaches its maximum density near 4°C. Cooling it toward freezing makes it less dense.",
+    "category": "Science",
+    "region": "Maximum density",
+    "source_name": "USGS · Water density",
+    "source_url": "https://www.usgs.gov/special-topics/water-science-school/science/water-density",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "≈4°C",
+        "label": "Maximum density"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Water reaches its maximum density near 4°C. Cooling it toward freezing makes it less dense."
+      }
+    ],
+    "sources": [
+      {
+        "name": "USGS · Water density",
+        "url": "https://www.usgs.gov/special-topics/water-science-school/science/water-density"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "Pure liquid water is densest near 4°C at atmospheric pressure.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "Water reaches its maximum density near 4°C. Cooling it toward freezing makes it less dense."
+    }
+  },
+  {
+    "id": "web-origin",
+    "kind": "fact",
+    "title": "A physicists’ workplace",
+    "summary": "Tim Berners-Lee invented the Web at CERN in 1989 to help researchers share information.",
+    "category": "Technology",
+    "region": "Web invention",
+    "source_name": "CERN · The birth of the Web",
+    "source_url": "https://home.cern/science/computing/the-birth-of-the-web/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "1989",
+        "label": "Web invention"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Tim Berners-Lee invented the Web at CERN in 1989 to help researchers share information."
+      }
+    ],
+    "sources": [
+      {
+        "name": "CERN · The birth of the Web",
+        "url": "https://home.cern/science/computing/the-birth-of-the-web/"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "The World Wide Web began at CERN.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "Tim Berners-Lee invented the Web at CERN in 1989 to help researchers share information."
+    }
+  },
+  {
+    "id": "web-first",
+    "kind": "fact",
+    "title": "The first website’s subject",
+    "summary": "The first website described the World Wide Web project and ran on Berners-Lee’s NeXT computer.",
+    "category": "Technology",
+    "region": "First website’s subject",
+    "source_name": "CERN · The birth of the Web",
+    "source_url": "https://home.cern/science/computing/the-birth-of-the-web/",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "The Web",
+        "label": "First website’s subject"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "The first website described the World Wide Web project and ran on Berners-Lee’s NeXT computer."
+      }
+    ],
+    "sources": [
+      {
+        "name": "CERN · The birth of the Web",
+        "url": "https://home.cern/science/computing/the-birth-of-the-web/"
+      }
+    ],
+    "quiz": {
+      "format": "comparison",
+      "question": "What did the first website explain?",
+      "options": [
+        "Online shopping",
+        "The Web itself"
+      ],
+      "answer": 1,
+      "explanation": "The first website described the World Wide Web project and ran on Berners-Lee’s NeXT computer."
+    }
+  },
+  {
+    "id": "liberty-hand",
+    "kind": "fact",
+    "title": "A giant hand",
+    "summary": "The hand measures 5 meters; the nose measures 1.37 meters.",
+    "category": "History",
+    "region": "Hand length",
+    "source_name": "NPS · Statue statistics",
+    "source_url": "https://www.nps.gov/stli/learn/historyculture/statue-statistics.htm",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "5 meters",
+        "label": "Hand length"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "The hand measures 5 meters; the nose measures 1.37 meters."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NPS · Statue statistics",
+        "url": "https://www.nps.gov/stli/learn/historyculture/statue-statistics.htm"
+      }
+    ],
+    "quiz": {
+      "format": "comparison",
+      "question": "Which is longer on the Statue of Liberty?",
+      "options": [
+        "Its hand",
+        "Its nose"
+      ],
+      "answer": 0,
+      "explanation": "The hand measures 5 meters; the nose measures 1.37 meters."
+    }
+  },
+  {
+    "id": "liberty-height",
+    "kind": "fact",
+    "title": "The pedestal makes a difference",
+    "summary": "Including its pedestal and base, ground to torch tip is approximately 93 meters.",
+    "category": "History",
+    "region": "Ground to torch",
+    "source_name": "NPS · Statue statistics",
+    "source_url": "https://www.nps.gov/stli/learn/historyculture/statue-statistics.htm",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "≈93 meters",
+        "label": "Ground to torch"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Including its pedestal and base, ground to torch tip is approximately 93 meters."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NPS · Statue statistics",
+        "url": "https://www.nps.gov/stli/learn/historyculture/statue-statistics.htm"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "The Statue of Liberty exceeds 90 meters from ground to torch.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "Including its pedestal and base, ground to torch tip is approximately 93 meters."
+    }
+  },
+  {
+    "id": "sound-speed",
+    "kind": "fact",
+    "title": "An underwater shortcut",
+    "summary": "Typical speeds are about 1,500 meters per second in seawater and 340 in air; conditions affect both.",
+    "category": "Science",
+    "region": "Sound in seawater",
+    "source_name": "NOAA · Sound in the ocean",
+    "source_url": "https://oceanservice.noaa.gov/facts/sound.html",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "≈1,500 m/s",
+        "label": "Sound in seawater"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Typical speeds are about 1,500 meters per second in seawater and 340 in air; conditions affect both."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NOAA · Sound in the ocean",
+        "url": "https://oceanservice.noaa.gov/facts/sound.html"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "Sound usually travels faster through seawater than air.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "Typical speeds are about 1,500 meters per second in seawater and 340 in air; conditions affect both."
+    }
+  },
+  {
+    "id": "sound-pressure",
+    "kind": "fact",
+    "title": "The deeper you go",
+    "summary": "Water pressure rises with depth and helps change how sound travels through the ocean.",
+    "category": "Science",
+    "region": "Pressure increases downward",
+    "source_name": "NOAA · Sound in the ocean",
+    "source_url": "https://oceanservice.noaa.gov/facts/sound.html",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "Depth",
+        "label": "Pressure increases downward"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Water pressure rises with depth and helps change how sound travels through the ocean."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NOAA · Sound in the ocean",
+        "url": "https://oceanservice.noaa.gov/facts/sound.html"
+      }
+    ],
+    "quiz": {
+      "format": "comparison",
+      "question": "Which has higher water pressure?",
+      "options": [
+        "Deep ocean",
+        "Ocean surface"
+      ],
+      "answer": 0,
+      "explanation": "Water pressure rises with depth and helps change how sound travels through the ocean."
+    }
+  },
+  {
+    "id": "tides-gravity",
+    "kind": "fact",
+    "title": "An ocean pulled from afar",
+    "summary": "The gravitational influence of the Moon and Sun drives tides. Wind also affects local water levels.",
+    "category": "Nature",
+    "region": "Tidal influences",
+    "source_name": "NOAA · Tides",
+    "source_url": "https://oceanservice.noaa.gov/facts/tides.html",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "Moon and Sun",
+        "label": "Tidal influences"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "The gravitational influence of the Moon and Sun drives tides. Wind also affects local water levels."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NOAA · Tides",
+        "url": "https://oceanservice.noaa.gov/facts/tides.html"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "Tides are driven only by wind.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 1,
+      "explanation": "The gravitational influence of the Moon and Sun drives tides. Wind also affects local water levels."
+    }
+  },
+  {
+    "id": "tides-wave",
+    "kind": "fact",
+    "title": "A wave across an ocean",
+    "summary": "Tidal waves move through the ocean; at the coast we observe the rise and fall of sea level.",
+    "category": "Nature",
+    "region": "Tides",
+    "source_name": "NOAA · Tides",
+    "source_url": "https://oceanservice.noaa.gov/facts/tides.html",
+    "reviewed_at": "2026-09-27",
+    "facts": [
+      {
+        "value": "Long-period waves",
+        "label": "Tides"
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The detail",
+        "text": "Tidal waves move through the ocean; at the coast we observe the rise and fall of sea level."
+      }
+    ],
+    "sources": [
+      {
+        "name": "NOAA · Tides",
+        "url": "https://oceanservice.noaa.gov/facts/tides.html"
+      }
+    ],
+    "quiz": {
+      "format": "true-false",
+      "question": "Tides are very long-period waves.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "explanation": "Tidal waves move through the ocean; at the coast we observe the rise and fall of sea level."
+    }
+  }
+]

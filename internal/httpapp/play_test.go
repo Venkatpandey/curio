@@ -63,7 +63,7 @@ func TestPlayRevealValidationAndProfileIsolation(t *testing.T) {
 		t.Fatal("reaction failed")
 	}
 	res, _ = f.get(c, "/discover?kind=fact&category=Animals")
-	if res.StatusCode != 303 || !strings.Contains(res.Header.Get("Location"), "octopus") {
+	if res.StatusCode != 303 || !strings.Contains(res.Header.Get("Location"), "category=Animals") {
 		t.Fatal("category filter failed")
 	}
 	res, _ = f.get(c, "/discover?kind=fact&category=invalid")

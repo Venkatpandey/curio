@@ -64,6 +64,10 @@ type page struct {
 	PageNumber, PreviousPage, NextPage                        int
 	HasMore                                                   bool
 	Preferences                                               []store.Preference
+	Edition                                                   store.Edition
+	Catalogue                                                 store.Catalogue
+	NewCount                                                  int
+	FactCategories                                            []string
 }
 type requestState struct {
 	session *store.Session
@@ -104,6 +108,7 @@ func New(db *store.Store, c config.Config, logger *slog.Logger, version string) 
 		w.Write(body)
 	})
 	mux.Handle("GET /{$}", a.withState(a.home))
+	mux.Handle("GET /freshness", a.withState(a.freshness))
 	mux.Handle("GET /enter", a.withState(a.enterPage))
 	mux.Handle("POST /enter", a.withState(a.enter))
 	mux.Handle("POST /logout", a.withState(a.logout))
@@ -233,12 +238,41 @@ func (a *App) home(w http.ResponseWriter, r *http.Request) {
 	if !a.mayBrowse(w, r) {
 		return
 	}
-	count, err := a.store.ContentCount(r.Context())
+	now := time.Now()
+	catalogue, err := a.store.Catalogue(r.Context(), now)
 	if err != nil {
 		a.fail(w, r, err)
 		return
 	}
-	a.render(w, r, 200, page{Title: "A little more curious", View: "home", ContentCount: count})
+	var userID int64
+	if state := stateOf(r); state.session != nil {
+		userID = state.session.User.ID
+	}
+	edition, err := a.store.DailyEdition(r.Context(), userID, now)
+	if err != nil {
+		a.fail(w, r, err)
+		return
+	}
+	newCount := 0
+	if cookie, err := r.Cookie(a.cookieName("catalogue")); err == nil {
+		if previous, err := strconv.Atoi(cookie.Value); err == nil && previous >= 0 {
+			newCount = max(0, catalogue.Count-previous)
+		}
+	}
+	a.cookie(w, "catalogue", strconv.Itoa(catalogue.Count), 30*24*60*60)
+	a.render(w, r, 200, page{Title: "Today's curiosity edition", View: "home", ContentCount: catalogue.Count, Edition: edition, Catalogue: catalogue, NewCount: newCount, FactCategories: catalogue.Categories})
+}
+func (a *App) freshness(w http.ResponseWriter, r *http.Request) {
+	if !a.mayBrowse(w, r) {
+		return
+	}
+	catalogue, err := a.store.Catalogue(r.Context(), time.Now())
+	if err != nil {
+		a.fail(w, r, err)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(catalogue)
 }
 func (a *App) enterPage(w http.ResponseWriter, r *http.Request) {
 	if stateOf(r).session != nil {
@@ -385,7 +419,12 @@ func (a *App) discover(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	category := r.URL.Query().Get("category")
-	if category != "" && (kind != "fact" || !slices.Contains([]string{"Space", "Animals"}, category)) {
+	catalogue, catalogueErr := a.store.Catalogue(r.Context(), time.Now())
+	if catalogueErr != nil {
+		a.fail(w, r, catalogueErr)
+		return
+	}
+	if category != "" && (kind != "fact" || !catalogue.HasCategory(category)) {
 		http.Error(w, "Unknown fact category.", 400)
 		return
 	}

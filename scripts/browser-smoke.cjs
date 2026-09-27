@@ -16,26 +16,58 @@ async function verify(browserType, name, options = {}) {
   page.on('response', response => { if (response.status() >= 500) errors.push(`${response.status()} ${response.url()}`); });
   try {
     await page.goto(baseURL);
-    await page.getByRole('heading', { name: 'Where will your curiosity take you?' }).waitFor();
+    await page.getByRole('heading', { name: 'A fresh reason to wonder.' }).waitFor();
     assert.equal(await page.locator('html').getAttribute('data-theme'), 'dark');
     await page.screenshot({ path: `${output}/${name}-home-desktop.png`, fullPage: true });
+    const dailyLinks = await page.locator('.daily-pick').evaluateAll(links => links.map(link => link.getAttribute('href')));
+    assert.equal(new Set(dailyLinks).size, 3);
+    await page.reload();
+    assert.deepEqual(await page.locator('.daily-pick').evaluateAll(links => links.map(link => link.getAttribute('href'))), dailyLinks);
+
+
+    await page.goto(baseURL);
     await page.keyboard.press(name === 'webkit' ? 'Alt+Tab' : 'Tab');
     assert.equal(await page.evaluate(() => document.activeElement.textContent), 'Skip to content');
     for (const kind of ['place', 'fact', 'surprise']) {
       await page.goto(`${baseURL}/discover?kind=${kind}`);
       const discoveryID = new URL(page.url()).searchParams.get('id');
       await page.getByRole('button', {name:'Just show me'}).click();
-      await page.locator('.read-more > summary').click();
-      assert.ok(await page.locator('.story-sources li a').first().getAttribute('href'));
+      const longRead = page.locator('.read-more > summary');
+      if (await longRead.count()) await longRead.click();
+      assert.ok(await page.locator('.story-sources li a, .quick-source a').first().getAttribute('href'));
       const photo = page.locator('.story-photo img');
-      await photo.evaluate(img => img.decode());
-      assert.ok(await photo.evaluate(img => img.naturalWidth >= 400));
-      assert.ok(await page.locator('.story-body section').count() >= 2);
-      assert.ok(await page.locator('.figures-panel dd').count() >= 2);
+      if (await photo.count()) {
+        await photo.evaluate(img => img.decode());
+        assert.ok(await photo.evaluate(img => img.naturalWidth >= 400));
+      } else {
+        await page.locator('.fact-reveal-art').waitFor();
+      }
+      if (await longRead.count()) {
+        assert.ok(await page.locator('.story-body section').count() >= 2);
+        assert.ok(await page.locator('.figures-panel dd').count() >= 2);
+      } else {
+        assert.ok(await page.locator('.quick-source').count() === 1);
+      }
       await page.locator('.discovery-bottom .button').click();
       assert.notEqual(new URL(page.url()).searchParams.get('id'), discoveryID, 'immediate card repeated');
     }
     await page.screenshot({ path: `${output}/${name}-discovery-desktop.png`, fullPage: true });
+    for (const [id, format, answer] of [['water-peak', 'true-false', 'True'], ['liberty-hand', 'comparison', 'Its hand']]) {
+      await page.goto(`${baseURL}/discover?kind=fact&id=${id}`);
+      assert.equal(await page.locator('.reading-page').getAttribute('data-format'), format);
+      assert.equal(await page.locator('.guess-option').count(), 2);
+      await page.screenshot({ path: `${output}/${name}-${format}-desktop.png`, fullPage: true });
+      await page.getByRole('button', { name: answer, exact: false }).click();
+      await page.getByText('You called it!', { exact: true }).waitFor();
+      await page.locator('.fact-reveal-art').waitFor();
+      assert.equal(await page.locator('.answer-reveal').evaluate(node => getComputedStyle(node).animationName), 'none');
+      await page.setViewportSize({ width: 320, height: 700 });
+      assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${format} reveal overflow`);
+      await page.goto(`${baseURL}/discover?kind=surprise&id=${id}`);
+      assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${format} quiz overflow`);
+      await page.screenshot({ path: `${output}/${name}-${format}-mobile.png`, fullPage: true });
+      await page.setViewportSize({ width: 1440, height: 1040 });
+    }
     await page.goto(`${baseURL}/enter`);
     await page.getByLabel('Your username').fill(`qa-${name}`);
     await page.getByLabel('Household password', { exact: true }).fill(password);
@@ -63,7 +95,8 @@ async function verify(browserType, name, options = {}) {
     assert.match(await page.locator('.daily-score').innerText(),/3 \/ 3/);
     assert.match(await page.locator('.badge-shelf').innerText(),/Game for a guess/);
     await page.goto(`${baseURL}/discover?kind=fact&category=Animals`);
-    assert.equal(new URL(page.url()).searchParams.get('id'),'octopus');
+    assert.equal(new URL(page.url()).searchParams.get('category'),'Animals');
+    assert.match(await page.locator('.discovery-nav').innerText(), /Animals/);
     await page.goto(`${baseURL}/discover?kind=fact&id=octopus`);
     await page.getByRole('button',{name:'♡ Keep this one',exact:true}).click();
     await page.getByRole('status').waitFor();
@@ -163,6 +196,40 @@ async function verify(browserType, name, options = {}) {
       assert.equal(await page.getByText('QA home').count(), 0);
       await context.setOffline(false);
     }
+    // Service-worker-controlled requests bypass Playwright route mocks in WebKit.
+    // Test freshness in isolation; the main context above covers real worker privacy.
+    const freshContext = await browser.newContext({ serviceWorkers: 'block' });
+    const freshPage = await freshContext.newPage();
+    await freshPage.goto(baseURL);
+    await freshPage.clock.install();
+    let freshnessRequests = 0;
+    await freshPage.route('**/freshness', route => {
+      freshnessRequests++;
+      return route.fulfill({ json: { day: '2099-01-01', revision: 'new-edition', count: 51 } });
+    });
+    const refreshToggle = freshPage.getByLabel('Check for fresh discoveries');
+    await refreshToggle.uncheck();
+    await freshPage.reload();
+    const stableLinks = await freshPage.locator('.daily-pick').evaluateAll(links => links.map(link => link.getAttribute('href')));
+    assert.equal(await refreshToggle.isChecked(), false, 'pause preference lost');
+    await freshPage.clock.fastForward(6 * 60000);
+    assert.equal(freshnessRequests, 0, 'paused refresh made a request');
+    await refreshToggle.check();
+    await freshPage.locator('.freshness-notice').waitFor();
+    assert.equal(freshnessRequests, 1);
+    assert.deepEqual(await freshPage.locator('.daily-pick').evaluateAll(links => links.map(link => link.getAttribute('href'))), stableLinks, 'freshness check replaced active content');
+    await refreshToggle.uncheck();
+    await freshPage.clock.fastForward(6 * 60000);
+    assert.equal(freshnessRequests, 1, 'pause ignored');
+    await freshContext.close();
+    const noJS = await browser.newContext({ javaScriptEnabled: false });
+    const plain = await noJS.newPage();
+    await plain.goto(baseURL);
+    assert.equal(await plain.locator('.daily-pick').count(), 3);
+    await plain.goto(`${baseURL}/discover?kind=fact&id=water-peak`);
+    await plain.getByRole('button', { name: 'True', exact: false }).click();
+    await plain.getByText('You called it!', { exact: true }).waitFor();
+    await noJS.close();
     assert.deepEqual(errors, []);
     console.log(`${name}: entry, settings, isolation, logout, discovery, responsive layouts, theme, and cache privacy passed`);
   } finally { await browser.close(); }

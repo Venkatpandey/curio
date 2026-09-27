@@ -184,7 +184,7 @@ func TestCSRFAndBoundaryValidation(t *testing.T) {
 		if res.StatusCode == 303 {
 			res, body = f.get(c, res.Header.Get("Location"))
 		}
-		if res.StatusCode != 200 || !strings.Contains(body, "<h1>") {
+		if res.StatusCode != 200 || !strings.Contains(body, "<h1") {
 			t.Fatal("page failed", path, res.StatusCode)
 		}
 		if res.Header.Get("Cache-Control") != "no-store" {

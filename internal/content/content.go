@@ -38,6 +38,7 @@ type Photo struct {
 }
 type Item struct {
 	ID           string    `json:"id"`
+	Round        *Quiz     `json:"quiz,omitempty"`
 	Kind         string    `json:"kind"`
 	Title        string    `json:"title"`
 	Summary      string    `json:"summary"`
@@ -92,10 +93,37 @@ func (i Item) Validate() error {
 	if i.Latitude != nil && (math.IsNaN(*i.Latitude) || math.IsNaN(*i.Longitude) || math.Abs(*i.Latitude) > 90 || math.Abs(*i.Longitude) > 180) {
 		return fmt.Errorf("invalid coordinates")
 	}
-	if i.Photo.URL == "" || i.Photo.Artist == "" || i.Photo.License == "" || i.Photo.SourceURL == "" || i.Photo.Alt == "" {
+	if (i.Kind == "place" || i.Photo.URL != "") && (i.Photo.URL == "" || i.Photo.Artist == "" || i.Photo.License == "" || i.Photo.SourceURL == "" || i.Photo.Alt == "") {
 		return fmt.Errorf("incomplete photograph attribution")
 	}
+	if i.Round != nil {
+		q := i.Round
+		if (q.Format != "true-false" && q.Format != "comparison") || q.Question == "" || len(q.Options) != 2 || q.Answer < 0 || q.Answer >= len(q.Options) || q.Explanation == "" {
+			return fmt.Errorf("invalid quiz")
+		}
+		if strings.TrimSpace(q.Options[0]) == "" || strings.TrimSpace(q.Options[1]) == "" || q.Options[0] == q.Options[1] {
+			return fmt.Errorf("invalid quiz options")
+		}
+		if q.Format == "true-false" && (q.Options[0] != "True" || q.Options[1] != "False") {
+			return fmt.Errorf("invalid true-false options")
+		}
+	}
 	return nil
+}
+
+func (i Item) Palette() string {
+	switch i.Category {
+	case "Space":
+		return "space"
+	case "Animals", "Nature":
+		return "nature"
+	case "Science", "Technology":
+		return "science"
+	case "History", "Language", "Food":
+		return "amber"
+	default:
+		return "ocean"
+	}
 }
 
 type Request struct {
@@ -138,7 +166,20 @@ func loadItems() []Item {
 			panic(err)
 		}
 	}
-	return items
+	body, err = data.ReadFile("data/quick-facts.json")
+	if err != nil {
+		panic(err)
+	}
+	var facts []Item
+	if err = json.Unmarshal(body, &facts); err != nil {
+		panic(err)
+	}
+	for _, item := range facts {
+		if err = item.Validate(); err != nil {
+			panic(fmt.Sprintf("%s: %v", item.ID, err))
+		}
+	}
+	return append(items, facts...)
 }
 func (Starter) Discover(ctx context.Context, r Request) (Item, error) {
 	if err := ctx.Err(); err != nil {

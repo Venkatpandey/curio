@@ -1,21 +1,24 @@
 {{define "home"}}
-<section class="daily-strip" aria-label="Curiosity challenge"><div><p class="eyebrow">Your daily side quest</p><h2>Three little discoveries.</h2><p>{{if .User}}{{if ge .Progress.Today 3}}Trio complete. Enjoy the rest of your day.{{else}}Guess or reveal three new stories. See what sticks.{{end}}{{else}}A quick guess. A small surprise. Something to tell someone.{{end}}</p></div>{{if .User}}<div class="daily-score"><strong>{{.Progress.Daily}} / 3</strong><progress value="{{.Progress.Daily}}" max="3" aria-label="Today's discoveries"></progress><span>{{.Progress.Points}} Curiosity Points</span></div>{{else}}<a class="button secondary" href="/discover?kind=surprise">Try a round ↗</a>{{end}}</section>
+<div class="edition-bar" data-edition-day="{{.Catalogue.Day}}" data-edition-revision="{{.Catalogue.Revision}}">
+ <span><span class="little-dot"></span> THE DAILY CURIOSITY · <time datetime="{{.Edition.Day}}">{{.Edition.Day}}</time></span>
+ <label class="refresh-control" hidden><input type="checkbox" data-refresh-toggle checked> Check for fresh discoveries</label>
+</div>
+<div class="freshness-notice" role="status" hidden><span data-freshness-message></span> <a href="/">Open the latest edition ↗</a></div>
+{{if gt .NewCount 0}}<p class="new-arrivals">{{.NewCount}} new {{if eq .NewCount 1}}discovery{{else}}discoveries{{end}} since your last homepage visit. <a href="/discover?kind=surprise">Explore the collection ↗</a></p>{{end}}
+<section class="edition-hero" aria-labelledby="edition-title">
+ <div class="edition-copy"><p class="eyebrow">A few minutes. Somewhere unexpected.</p><h1 id="edition-title">A fresh reason<br>to <em>wonder.</em></h1><p>One place to escape to. Two questions to turn over. Your picks stay here for today.</p><a class="button primary" href="#daily-picks">Open today’s picks <span aria-hidden="true">↘</span></a><span class="edition-count">{{.ContentCount}} discoveries in your pocket</span></div>
+ {{with index .Edition.Items 0}}<figure class="edition-cover"><a href="/discover?kind={{.Kind}}&amp;id={{.ID}}"><img src="{{.Photo.URL}}" alt="{{.Photo.Alt}}" width="900" height="700" fetchpriority="high"><div class="cover-caption"><span class="eyebrow">TODAY’S ESCAPE / {{.Category}}</span><h2>{{.Title}}</h2><span>Take a closer look ↗</span></div></a><figcaption>{{.Photo.Artist}} · {{.Photo.License}} · <a href="{{.Photo.SourceURL}}" target="_blank" rel="noopener noreferrer">Photo source ↗</a></figcaption></figure>{{end}}
+</section>
+<section id="daily-picks" class="daily-picks" aria-labelledby="picks-title"><div class="section-label"><h2 id="picks-title">Your three for today</h2><span>A new edition each day</span></div>
+ <div class="pick-grid">{{range $n,$item := .Edition.Items}}<a class="daily-pick" data-palette="{{.Palette}}" href="/discover?kind={{.Kind}}&amp;id={{.ID}}"><span class="pick-meta">{{.Category}} <span>{{.Quiz.Label}}</span></span><h3>{{.Quiz.Question}}</h3>{{if eq .Quiz.Format "comparison"}}<p class="pick-options">{{index .Quiz.Options 0}} <span>or</span> {{index .Quiz.Options 1}}</p>{{end}}<span class="pick-footer">{{if index $.Edition.Completed .ID}}✓ Discovered · revisit{{else}}Take a guess{{end}} <span aria-hidden="true">↗</span></span></a>{{end}}</div>
+</section>
+<section class="daily-strip" aria-label="Curiosity challenge"><div><p class="eyebrow">Your daily side quest</p><h2>Three little discoveries.</h2><p>{{if .User}}{{if ge .Progress.Today 3}}Trio complete. Enjoy the rest of your day.{{else}}Guess or reveal three new stories. Today’s picks are a starting point.{{end}}{{else}}A quick guess. A small surprise. Something to tell someone.{{end}}</p></div>{{if .User}}<div class="daily-score"><strong>{{.Progress.Daily}} / 3</strong><progress value="{{.Progress.Daily}}" max="3" aria-label="Today's discoveries"></progress><span>{{.Progress.Points}} Curiosity Points</span></div>{{else}}<a class="button secondary" href="/discover?kind=surprise">Try a round ↗</a>{{end}}</section>
 {{if .User}}{{if .Progress.Badges}}<div class="badge-shelf" aria-label="Your badges">{{range .Progress.Badges}}<span>✦ {{.}}</span>{{end}}</div>{{end}}{{end}}
-<section class="home-hero">
-<div class="hero-copy"><p class="eyebrow"><span class="little-dot"></span> A small break. A big world.</p>
-<h1>Where will your <br><em>curiosity</em> take you?</h1>
-<p class="hero-description">Guess first. Get surprised. <br class="desktop-break"> Bring one good story back to your day.</p>
-</div>
-<figure class="hero-photograph"><a href="/discover?kind=place&amp;id=socotra"><img src="/static/photos/socotra.jpg" alt="A real dragon’s blood tree on Socotra’s rocky plateau" width="480" height="360"><span>Somewhere real. Somewhere unexpected. ↗</span></a><figcaption>Socotra, Yemen · Photo: Alex38 / CC BY 4.0 · <a href="https://commons.wikimedia.org/wiki/File:Dragonblood_tree_in_Socotra_2.jpg" target="_blank" rel="noopener noreferrer">Source ↗</a></figcaption></figure>
-</section>
-<section aria-labelledby="choose-heading" class="choose-section">
-<div class="section-label"><h2 id="choose-heading">What are you in the mood for?</h2><span>No agenda needed <span aria-hidden="true">↙</span></span></div>
-<div class="choice-grid">
-<a class="choice choice-place" href="/discover?kind=place"><div class="choice-top"><span class="choice-symbol"><svg aria-hidden="true"><use href="/static/icons.svg#globe"/></svg></span><span class="choice-index">01 / WANDER</span></div><div><h3>Take me <br>somewhere.</h3><p>Hidden corners. Faraway places. <br>A two-minute escape.</p></div><span class="choice-action">Let’s get lost <span class="arrow-circle" aria-hidden="true">↗</span></span></a>
-<a class="choice choice-fact" href="/discover?kind=fact"><div class="choice-top"><span class="choice-symbol"><svg aria-hidden="true"><use href="/static/icons.svg#bulb"/></svg></span><span class="choice-index">02 / WONDER</span></div><div><h3>Tell me <br>something.</h3><p>Real stories that make you <br>say, “Wait, really?”</p></div><span class="choice-action">I’m all ears <span class="arrow-circle" aria-hidden="true">↗</span></span></a>
-<a class="choice choice-surprise" href="/discover?kind=surprise"><div class="choice-top"><span class="choice-symbol"><svg aria-hidden="true"><use href="/static/icons.svg#dice"/></svg></span><span class="choice-index">03 / WHY NOT?</span></div><div><h3>Surprise <br>me.</h3><p>A mystery photo. A quick guess. <br>Let’s see what you’ve got.</p></div><span class="choice-action">Roll with it <span class="arrow-circle" aria-hidden="true">↗</span></span></a>
-</div>
-</section>
-<nav class="fact-topics" aria-label="Fact categories"><span>In a fact mood?</span><a href="/discover?kind=fact">Any topic</a><a href="/discover?kind=fact&amp;category=Space">Space</a><a href="/discover?kind=fact&amp;category=Animals">Animals</a></nav>
-<aside class="home-note"><span class="note-symbol" aria-hidden="true">✳</span><div><h2>Just one more thing? Your call.</h2><p>One discovery at a time. Take what you like, then get on with your day.</p></div><span class="collection-tag">{{.ContentCount}} discoveries to explore</span></aside>
+<section class="choose-section" aria-labelledby="choose-heading"><div class="section-label"><h2 id="choose-heading">Follow your mood</h2><span>Three ways to wander</span></div>
+<div class="mood-grid">
+<a class="mood-place" href="/discover?kind=place"><span class="eyebrow">01 / FIELD NOTES</span><svg aria-hidden="true"><use href="/static/icons.svg#globe"/></svg><h3>Somewhere<br>you’ve never been.</h3><p>Real places. Photo mysteries. A window into another corner of the world.</p><span class="mood-action">Explore places ↗</span></a>
+<a class="mood-fact" href="/discover?kind=fact"><span class="eyebrow">02 / THE QUESTION DESK</span><span class="mood-glyph" aria-hidden="true">Aa?</span><h3>Wait.<br>Is that true?</h3><p>Pick a side. Challenge a hunch. Keep one good fact.</p><span class="mood-action">Play with facts ↗</span></a>
+<a class="mood-surprise" href="/discover?kind=surprise"><span class="eyebrow">03 / LUCKY DIP</span><span class="mood-glyph" aria-hidden="true">✳</span><h3>Leave room<br>for a surprise.</h3><p>A photo, a claim, or a comparison. See what comes next.</p><span class="mood-action">Surprise me ↗</span></a>
+</div></section>
+<nav class="fact-topics" aria-label="Fact categories"><span>Follow a thread</span><a href="/discover?kind=fact">Any topic</a>{{range .FactCategories}}<a href="/discover?kind=fact&amp;category={{.}}">{{.}}</a>{{end}}</nav>
 {{end}}

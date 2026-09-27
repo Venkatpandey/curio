@@ -38,3 +38,38 @@ func TestStarterSelection(t *testing.T) {
 		t.Fatal("ignored cancellation")
 	}
 }
+
+func TestQuickFactsHaveValidDistinctSourcedRounds(t *testing.T) {
+	seen := map[string]bool{}
+	formats := map[string]int{}
+	for _, item := range Items {
+		if seen[item.ID] {
+			t.Fatal("duplicate id", item.ID)
+		}
+		seen[item.ID] = true
+		q := item.Quiz()
+		if q.Question == "" || q.Answer < 0 || q.Answer >= len(q.Options) || q.Explanation == "" {
+			t.Fatal("unplayable item", item.ID)
+		}
+		formats[q.Format]++
+		if item.Round == nil {
+			continue
+		}
+		if item.Photo.URL != "" || len(item.Sources) == 0 || len(item.Facts) == 0 || item.ReviewedAt == "" {
+			t.Fatal("invalid quick fact provenance", item.ID)
+		}
+		if err := item.Validate(); err != nil {
+			t.Fatal(item.ID, err)
+		}
+		broken := item
+		copyQuiz := *item.Round
+		broken.Round = &copyQuiz
+		broken.Round.Answer = 2
+		if broken.Validate() == nil {
+			t.Fatal("out of range answer accepted")
+		}
+	}
+	if len(Items) != 50 || formats["true-false"] < 10 || formats["comparison"] < 10 {
+		t.Fatal("missing variety", formats)
+	}
+}
