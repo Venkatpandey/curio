@@ -70,7 +70,7 @@ func (s *Store) Discover(ctx context.Context, r content.Request) (content.Item, 
 	if r.Kind != "place" && r.Kind != "fact" && r.Kind != "surprise" {
 		return content.Item{}, fmt.Errorf("invalid kind")
 	}
-	rows, err := s.db.QueryContext(ctx, `SELECT c.id,json_extract(c.payload,'$.category'),COALESCE(h.last_seen,0) FROM content_items c LEFT JOIN user_history h ON h.content_id=c.id AND h.user_id=? WHERE (?='surprise' OR c.kind=?) AND c.id<>? AND (?='' OR json_extract(c.payload,'$.category')=?) ORDER BY COALESCE(h.last_seen,0),c.id`, r.UserID, r.Kind, r.Kind, r.ExcludeID, r.Category, r.Category)
+	rows, err := s.db.QueryContext(ctx, `SELECT c.id,json_extract(c.payload,'$.category'),COALESCE(h.last_seen,0) FROM content_items c LEFT JOIN user_history h ON h.content_id=c.id AND h.user_id=? AND h.last_seen>? WHERE (c.expires_at=0 OR c.expires_at>?) AND (?='surprise' OR c.kind=?) AND c.id<>? AND (?='' OR json_extract(c.payload,'$.category')=?) ORDER BY COALESCE(h.last_seen,0),c.id`, r.UserID, time.Now().Add(-content.Retention).UnixNano(), time.Now().Unix(), r.Kind, r.Kind, r.ExcludeID, r.Category, r.Category)
 	if err != nil {
 		return content.Item{}, err
 	}

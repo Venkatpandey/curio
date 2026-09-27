@@ -64,9 +64,9 @@ POST `/play` validates CSRF, content ID, and answer bounds. The server checks th
 
 ## Personal collection and recommendations
 
-Migration 004 adds favorites, a reaction timestamp, and per-user recommendation reset timestamps. Existing reactions receive timestamp zero and participate until the user resets. Reset runs in a transaction: clear interests and advance the cutoff. Reaction records remain intact; subsequent reaction updates receive a new timestamp.
+Migration 004 adds favorites, a reaction timestamp, and per-user recommendation reset timestamps. Existing reactions received timestamp zero; migration 006 excludes and prunes these undated signals under the seven-day policy. Reset runs in a transaction: clear interests and advance the cutoff. Reaction records remain intact; subsequent reaction updates receive a new timestamp.
 
-Favorite saves/removals are idempotent POSTs with CSRF and session-derived ownership. Collection pages use fixed 12-item pagination and stable ID tie-breaks. Private HTML remains `no-store`. Recommendation weights are computed from current interests and reactions newer than the reset cutoff, with a 25–300 bound. Selection groups eligible stories by category, reserves one in four draws for categories below the strongest available weight, and otherwise samples categories by weight. Equal-weight pools explore uniformly. Explicit filters, unseen-first selection, and immediate-repeat exclusion apply before this step.
+Favorite saves/removals are idempotent POSTs with CSRF and session-derived ownership. Collection pages use fixed 12-item pagination and stable ID tie-breaks. Private HTML remains `no-store`. Recommendation weights are computed from current interests and reactions within seven days and newer than the reset cutoff, with a 25–300 bound. Selection groups eligible stories by category, reserves one in four draws for categories below the strongest available weight, and otherwise samples categories by weight. Equal-weight pools explore uniformly. Explicit filters, unseen-first selection, and immediate-repeat exclusion apply before this step.
 
 ## Origin checks on LAN and proxied deployments
 
@@ -79,3 +79,12 @@ Migration 005 adds `daily_editions(profile_id, day, items)`. A transaction store
 `GET /freshness` returns a local date, catalogue size, and SHA-256 digest of sorted content IDs under normal browse authorization and `no-store`. IDs, rather than cache timestamps, prevent provider refreshes from looking like new arrivals. The browser checks only while the homepage is visible, at most once per minute on focus and every five minutes otherwise, with an eight-second timeout. A notice offers navigation; neither questions nor previews are replaced automatically. A localStorage boolean stores the pause preference. An HttpOnly cookie records the last homepage catalogue count; neither value contains account information.
 
 Quick facts carry validated two-option quiz data in their stored payloads. Server-side scoring uses that payload, preserves first-completion semantics, and never trusts submitted correctness. Photo credit validation still applies to all places and any fact with a photograph; photo-free facts render typographic artwork. Topic navigation and validation use the categories of actual fact records.
+
+
+## Runtime source feeds
+
+Migration 006 adds content expiry and persisted per-provider state. `FeedSource` fetches a bounded batch, and `ImportFeed` validates the complete batch before an atomic publish. NASA Science and NASA Technology are fixed allowlisted HTTPS sources. Stable IDs hash canonical article URLs; updates retain IDs and cannot extend existing expiry. XML parsing and normalization never generate quizzes or claim human review. Feed content renders escaped text with source and publication/fetch dates.
+
+Independent workers poll each source every four hours, with 30-second batch deadlines and 20-second HTTP timeouts. Before fetching, a worker persists its next attempt to avoid restart storms. Failures back off from one minute to 256 minutes; `Retry-After` can extend this to 24 hours. Payloads are limited to 2 MiB and 100 entries. Invalid individual entries are skipped; malformed envelopes fail the fetch. Source errors do not block app startup or cached reading.
+
+Discovery, editions, catalogue counts, and latest-update queries exclude expired imports even before hourly deletion. Saved favorites and today's pinned edition retain payloads but do not make expired items eligible again. Cleanup runs independently of fetching. Seven-day behavior cutoffs apply in queries as well as cleanup. Reaction rows snapshot category and survive payload deletion until their own expiry. Migration 006 detaches completion rows from content deletion while preserving the user cascade and unique user/content award key. Source bodies are not retained by the award ledger. Full source and retention policy: [runtime feeds](runtime-feeds.md).

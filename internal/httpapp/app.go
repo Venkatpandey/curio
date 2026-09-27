@@ -68,6 +68,7 @@ type page struct {
 	Catalogue                                                 store.Catalogue
 	NewCount                                                  int
 	FactCategories                                            []string
+	LatestUpdates                                             []content.Item
 }
 type requestState struct {
 	session *store.Session
@@ -253,6 +254,11 @@ func (a *App) home(w http.ResponseWriter, r *http.Request) {
 		a.fail(w, r, err)
 		return
 	}
+	latest, err := a.store.LatestUpdates(r.Context(), now)
+	if err != nil {
+		a.fail(w, r, err)
+		return
+	}
 	newCount := 0
 	if cookie, err := r.Cookie(a.cookieName("catalogue")); err == nil {
 		if previous, err := strconv.Atoi(cookie.Value); err == nil && previous >= 0 {
@@ -260,7 +266,7 @@ func (a *App) home(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	a.cookie(w, "catalogue", strconv.Itoa(catalogue.Count), 30*24*60*60)
-	a.render(w, r, 200, page{Title: "Today's curiosity edition", View: "home", ContentCount: catalogue.Count, Edition: edition, Catalogue: catalogue, NewCount: newCount, FactCategories: catalogue.Categories})
+	a.render(w, r, 200, page{Title: "Today's curiosity edition", View: "home", ContentCount: catalogue.Count, Edition: edition, Catalogue: catalogue, NewCount: newCount, FactCategories: catalogue.Categories, LatestUpdates: latest})
 }
 func (a *App) freshness(w http.ResponseWriter, r *http.Request) {
 	if !a.mayBrowse(w, r) {
@@ -495,12 +501,12 @@ func (a *App) discover(w http.ResponseWriter, r *http.Request) {
 		if len(recent) > 20 {
 			recent = recent[len(recent)-20:]
 		}
-		a.cookie(w, "seen", strings.Join(recent, ","), 30*24*60*60)
+		a.cookie(w, "seen", strings.Join(recent, ","), 7*24*60*60)
 	}
 	if guest, ok := r.Context().Value(guestAttemptKey{}).(*store.Attempt); ok {
 		p.Attempt = guest
 	}
-	p.Revealed = p.Attempt != nil
+	p.Revealed = p.Attempt != nil || item.Feed != nil
 	if state.session != nil {
 		switch r.URL.Query().Get("saved") {
 		case "saved":

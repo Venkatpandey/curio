@@ -19,6 +19,7 @@ services:
       # Set true to also allow browsing without entering a profile.
       CURIO_GUEST_ENABLED: "false"
       CURIO_WIKIMEDIA_ENABLED: "true"
+      CURIO_FEEDS_ENABLED: "true"
       TZ: "Europe/Berlin"
     volumes:
       - curio-data:/data

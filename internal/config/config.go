@@ -16,6 +16,7 @@ type Config struct {
 	AccessPassword   string
 	GuestEnabled     bool
 	WikimediaEnabled bool
+	FeedsEnabled     bool
 	LogLevel         slog.Level
 }
 
@@ -33,6 +34,9 @@ func Load() (Config, error) {
 		return c, err
 	}
 	if c.WikimediaEnabled, err = boolean("CURIO_WIKIMEDIA_ENABLED", true); err != nil {
+		return c, err
+	}
+	if c.FeedsEnabled, err = boolean("CURIO_FEEDS_ENABLED", true); err != nil {
 		return c, err
 	}
 	if c.BaseURL != "" {

@@ -80,7 +80,7 @@ The reusable `checks.yml` workflow runs Go checks, isolated Chromium/WebKit smok
 
 `ci.yml` runs on pull requests, pushes to `main`, and manual dispatch. Only successful main runs publish development images (`edge` and `sha-<commit>`). `release.yml` validates `vMAJOR.MINOR.PATCH` tags, allows prerelease suffixes, reruns all checks, and publishes version tags. Stable tags update `latest`; prereleases do not. The publish workflow includes provenance and an SBOM. Both architectures build with Buildx and QEMU.
 
-To run browser checks locally, install Node.js, run `npm ci`, then `npx playwright install chromium webkit`. Start a disposable Curio server and run `npm run test:browser`. Runtime images contain neither Node.js nor these development dependencies.
+To run browser checks locally, install Node.js, run `npm ci`, then `npx playwright install chromium webkit`. Start a disposable Curio server with `CURIO_WIKIMEDIA_ENABLED=false` and `CURIO_FEEDS_ENABLED=false`, then run `npm run test:browser`. Disable both providers so network imports cannot change the test catalogue. Runtime images contain neither Node.js nor these development dependencies.
 
 ## Phone access over LAN HTTP
 
@@ -91,3 +91,10 @@ An older build sent `Referrer-Policy: no-referrer`, which caused browsers to sub
 For a reverse proxy, set `CURIO_BASE_URL` to the exact external origin. The server trusts that configured origin without accepting arbitrary `X-Forwarded-Host` values. Use an HTTPS base URL only when browsing over HTTPS because it enables Secure cookies.
 
 `scripts/lan-smoke.cjs` tests Chromium and WebKit on a non-loopback HTTP address, verifies the request's Origin and missing Fetch Metadata, and exercises guest quizzes, profile entry, saved answers, favorites, and logout. CI runs it after the ordinary browser suite. Set `CURIO_TEST_LAN_URL` to choose the address explicitly.
+
+
+## Live source feeds and retention
+
+`CURIO_FEEDS_ENABLED` defaults to `true` and controls NASA Science/Technology imports independently of Wikimedia. Disable both provider settings to stop outbound content fetching. Feed workers persist next-attempt times, so restarting does not force another fetch. A successful fetch logs `Source updates cached` with provider and accepted count; failures log `Source update deferred` without source bodies or private profile data. Source failure leaves `/health` healthy.
+
+Startup and hourly cleanup remove behavior older than seven days and expired unsaved feed payloads even when providers are disabled. Favorites, today's pinned picks, explicit interests, and the award ledger follow the exceptions documented in [runtime feeds](runtime-feeds.md). Back up before upgrading if you need a copy of older browsing/reaction data: the new retention policy removes it automatically. Schema 006 cannot be opened by older binaries; restore a compatible backup when rolling back.

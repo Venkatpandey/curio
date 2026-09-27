@@ -56,6 +56,7 @@ jobs:
           CURIO_DATA_DIR: ${{ runner.temp }}/curio-data
           CURIO_PORT: '18080'
           CURIO_WIKIMEDIA_ENABLED: 'false'
+          CURIO_FEEDS_ENABLED: 'false'
           CURIO_TEST_BROWSER: ${{ matrix.browser }}
         run: |
           mkdir -p test-results

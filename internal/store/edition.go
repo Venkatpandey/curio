@@ -31,7 +31,7 @@ type Catalogue struct {
 // application restart must not advertise an existing story as a new arrival.
 func (s *Store) Catalogue(ctx context.Context, now time.Time) (Catalogue, error) {
 	c := Catalogue{Day: now.Format("2006-01-02")}
-	rows, err := s.db.QueryContext(ctx, `SELECT id,kind,json_extract(payload,'$.category') FROM content_items ORDER BY id`)
+	rows, err := s.db.QueryContext(ctx, `SELECT id,kind,json_extract(payload,'$.category') FROM content_items WHERE expires_at=0 OR expires_at>? ORDER BY id`, now.Unix())
 	if err != nil {
 		return c, err
 	}
@@ -80,7 +80,7 @@ func (s *Store) DailyEdition(ctx context.Context, userID int64, now time.Time) (
 			return edition, previousErr
 		}
 
-		rows, err := tx.QueryContext(ctx, `SELECT c.id,c.kind,json_extract(c.payload,'$.category'),EXISTS(SELECT 1 FROM discoveries d WHERE d.user_id=? AND d.content_id=c.id),EXISTS(SELECT 1 FROM user_history h WHERE h.user_id=? AND h.content_id=c.id) FROM content_items c ORDER BY c.id`, userID, userID)
+		rows, err := tx.QueryContext(ctx, `SELECT c.id,c.kind,json_extract(c.payload,'$.category'),EXISTS(SELECT 1 FROM discoveries d WHERE d.user_id=? AND d.content_id=c.id),EXISTS(SELECT 1 FROM user_history h WHERE h.user_id=? AND h.content_id=c.id AND h.last_seen>?) FROM content_items c WHERE c.expires_at=0 OR c.expires_at>? ORDER BY c.id`, userID, userID, now.Add(-content.Retention).UnixNano(), now.Unix())
 		if err != nil {
 			return edition, err
 		}

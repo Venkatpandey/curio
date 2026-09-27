@@ -33,13 +33,15 @@ func (s *Store) Collection(ctx context.Context, uid int64, tab string, page int)
 	if page < 1 || page > 100000 {
 		return nil, false, fmt.Errorf("invalid page")
 	}
-	query := `SELECT c.payload,h.last_seen,EXISTS(SELECT 1 FROM favorites f WHERE f.user_id=h.user_id AND f.content_id=h.content_id) FROM user_history h JOIN content_items c ON c.id=h.content_id WHERE h.user_id=? ORDER BY h.last_seen DESC,c.id LIMIT ? OFFSET ?`
+	query := `SELECT c.payload,h.last_seen,EXISTS(SELECT 1 FROM favorites f WHERE f.user_id=h.user_id AND f.content_id=h.content_id) FROM user_history h JOIN content_items c ON c.id=h.content_id WHERE h.user_id=? AND h.last_seen>? ORDER BY h.last_seen DESC,c.id LIMIT ? OFFSET ?`
+	args := []any{uid, time.Now().Add(-content.Retention).UnixNano(), CollectionPageSize + 1, (page - 1) * CollectionPageSize}
 	if tab == "favorites" {
+		args = []any{uid, CollectionPageSize + 1, (page - 1) * CollectionPageSize}
 		query = `SELECT c.payload,f.saved_at,1 FROM favorites f JOIN content_items c ON c.id=f.content_id WHERE f.user_id=? ORDER BY f.saved_at DESC,c.id LIMIT ? OFFSET ?`
 	} else if tab != "history" {
 		return nil, false, fmt.Errorf("invalid collection")
 	}
-	rows, err := s.db.QueryContext(ctx, query, uid, CollectionPageSize+1, (page-1)*CollectionPageSize)
+	rows, err := s.db.QueryContext(ctx, query, args...)
 	if err != nil {
 		return nil, false, err
 	}

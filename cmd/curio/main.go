@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"sync"
 	"syscall"
 	"time"
 	_ "time/tzdata"
@@ -51,13 +52,19 @@ func run() error {
 	server := &http.Server{Addr: ":" + c.Port, Handler: handler, ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 15 * time.Second, WriteTimeout: 30 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 16 * 1024}
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
-	providerDone := make(chan struct{})
+	var providers sync.WaitGroup
 	if c.WikimediaEnabled {
-		go func() { defer close(providerDone); content.NewWikimedia(db, logger).Run(ctx) }()
-	} else {
-		close(providerDone)
+		providers.Go(func() { content.NewWikimedia(db, logger).Run(ctx) })
 	}
-	defer func() { stop(); <-providerDone }()
+	if c.FeedsEnabled {
+		for _, source := range content.NASAFeeds() {
+			providers.Go(func() { content.FeedWorker{Source: source, Cache: db, Logger: logger}.Run(ctx) })
+		}
+	}
+	defer func() { stop(); providers.Wait() }()
+	if err := db.CleanupContent(ctx, time.Now()); err != nil {
+		return fmt.Errorf("content cleanup: %w", err)
+	}
 	done := make(chan error, 1)
 	go func() {
 		logger.Info("Curio listening", "port", c.Port, "version", version)
@@ -76,6 +83,9 @@ func run() error {
 			}
 			return err
 		case <-ticker.C:
+			if err := db.CleanupContent(ctx, time.Now()); err != nil {
+				logger.Error("content cleanup failed", "error", err)
+			}
 			if err := db.CleanSessions(ctx); err != nil {
 				logger.Error("session cleanup failed", "error", err)
 			}

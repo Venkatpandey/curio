@@ -38,6 +38,7 @@ type Photo struct {
 }
 type Item struct {
 	ID           string    `json:"id"`
+	Feed         *FeedInfo `json:"feed,omitempty"`
 	Round        *Quiz     `json:"quiz,omitempty"`
 	Kind         string    `json:"kind"`
 	Title        string    `json:"title"`

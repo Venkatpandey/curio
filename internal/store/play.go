@@ -5,6 +5,8 @@ import (
 	"database/sql"
 	"fmt"
 	"time"
+
+	"curio/internal/content"
 )
 
 type Progress struct{ Points, Discoveries, Today, Guesses, Correct int }
@@ -45,7 +47,7 @@ func (s *Store) Complete(ctx context.Context, uid int64, id string, answer int, 
 	if answer >= 0 {
 		points = 3
 	}
-	_, err := s.db.ExecContext(ctx, `INSERT INTO discoveries(user_id,content_id,day,answer,correct,points) VALUES(?,?,?,?,?,?) ON CONFLICT(user_id,content_id) DO NOTHING`, uid, id, now.Format("2006-01-02"), answer, correct, points)
+	_, err := s.db.ExecContext(ctx, `INSERT INTO discoveries(user_id,content_id,day,answer,correct,points) SELECT ?,?,?,?,?,? WHERE EXISTS(SELECT 1 FROM content_items WHERE id=?) ON CONFLICT(user_id,content_id) DO NOTHING`, uid, id, now.Format("2006-01-02"), answer, correct, points, id)
 	return err
 }
 func (s *Store) Progress(ctx context.Context, uid int64, now time.Time) (Progress, error) {
@@ -61,12 +63,12 @@ func (s *Store) React(ctx context.Context, uid int64, id, value string) error {
 		_, err := s.db.ExecContext(ctx, `DELETE FROM reactions WHERE user_id=? AND content_id=?`, uid, id)
 		return err
 	}
-	_, err := s.db.ExecContext(ctx, `INSERT INTO reactions(user_id,content_id,value,updated_at) VALUES(?,?,?,?) ON CONFLICT(user_id,content_id) DO UPDATE SET value=excluded.value,updated_at=excluded.updated_at`, uid, id, value, time.Now().UnixNano())
+	_, err := s.db.ExecContext(ctx, `INSERT INTO reactions(user_id,content_id,value,updated_at,category) SELECT ?,?,?,?,json_extract(payload,'$.category') FROM content_items WHERE id=? ON CONFLICT(user_id,content_id) DO UPDATE SET value=excluded.value,updated_at=excluded.updated_at,category=excluded.category`, uid, id, value, time.Now().UnixNano(), id)
 	return err
 }
 func (s *Store) Reaction(ctx context.Context, uid int64, id string) (string, error) {
 	var value string
-	err := s.db.QueryRowContext(ctx, `SELECT value FROM reactions WHERE user_id=? AND content_id=?`, uid, id).Scan(&value)
+	err := s.db.QueryRowContext(ctx, `SELECT value FROM reactions WHERE user_id=? AND content_id=? AND updated_at>?`, uid, id, time.Now().Add(-content.Retention).UnixNano()).Scan(&value)
 	if err == sql.ErrNoRows {
 		return "", nil
 	}
