@@ -169,8 +169,10 @@ async function verify(browserType, name, options = {}) {
     await page.screenshot({ path: `${output}/${name}-home-mobile-default.png`, fullPage: true });
     await page.setViewportSize({ width: 320, height: 640 });
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), '320px overflow');
-    // A different browser profile must not inherit account data.
-    const other = await browser.newContext();
+    // Check profile isolation independently of service-worker installation.
+    // Linux WebKit can fail navigation while a second context starts its worker.
+    // The main context retains worker-backed navigation and cache checks below.
+    const other = await browser.newContext({ serviceWorkers: 'block' });
     const guest = await other.newPage();
     await guest.goto(`${baseURL}/settings`);
     assert.equal(new URL(guest.url()).pathname, '/enter');
@@ -182,6 +184,7 @@ async function verify(browserType, name, options = {}) {
     // Private HTML must never enter the service worker cache.
     await page.evaluate(async () => { await navigator.serviceWorker.ready; });
     await page.reload();
+    await page.waitForFunction(() => navigator.serviceWorker.controller !== null);
     const cachedURLs = await page.evaluate(async () => {
       const keys = await caches.keys();
       return (await Promise.all(keys.map(async key => (await (await caches.open(key)).keys()).map(request => request.url)))).flat();
